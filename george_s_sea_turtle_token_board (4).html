@@ -1,1392 +1,1151 @@
 <!DOCTYPE html>
 <html lang="en" class="h-full">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>George's Sea Turtle Token Board</title>
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@600;700;800;900&display=swap" rel="stylesheet">
-    <!-- FontAwesome Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: {
-                        fredoka: ['Fredoka', 'sans-serif'],
-                        nunito: ['Nunito', 'sans-serif'],
-                    },
-                    colors: {
-                        ocean: {
-                            deep: '#032b45',
-                            dark: '#0f4c75',
-                            mid: '#1b6ca8',
-                            light: '#3282b8',
-                            aqua: '#00b4d8',
-                            cyan: '#90e0ef',
-                            foam: '#caf0f8',
-                        },
-                        turtle: {
-                            shell: '#2d6a4f',
-                            shellLight: '#52b788',
-                            skin: '#74c69d',
-                            belly: '#b7e4c7',
-                        },
-                        sand: '#f4a261',
-                        coral: '#ff70a6',
-                    },
-                    animation: {
-                        'float-slow': 'float 6s ease-in-out infinite',
-                        'swim': 'swim 5s ease-in-out infinite',
-                        'bubble': 'bubble 6s linear infinite',
-                        'pulse-glow': 'pulseGlow 2s infinite',
-                        'bounce-short': 'bounceShort 0.4s ease-out',
-                    },
-                    keyframes: {
-                        float: {
-                            '0%, 100%': { transform: 'translateY(0px) rotate(0deg)' },
-                            '50%': { transform: 'translateY(-8px) rotate(2deg)' },
-                        },
-                        swim: {
-                            '0%, 100%': { transform: 'translateX(0) translateY(0) rotate(0deg)' },
-                            '50%': { transform: 'translateX(6px) translateY(-4px) rotate(3deg)' },
-                        },
-                        bubble: {
-                            '0%': { transform: 'translateY(100vh) scale(0.3)', opacity: '0' },
-                            '20%': { opacity: '0.6' },
-                            '80%': { opacity: '0.8' },
-                            '100%': { transform: 'translateY(-10vh) scale(1.1)', opacity: '0' },
-                        },
-                        pulseGlow: {
-                            '0%, 100%': { boxShadow: '0 0 12px rgba(0, 180, 216, 0.4)' },
-                            '50%': { boxShadow: '0 0 24px rgba(0, 180, 216, 0.8)' },
-                        },
-                        bounceShort: {
-                            '0%': { transform: 'scale(0.8)' },
-                            '50%': { transform: 'scale(1.1)' },
-                            '100%': { transform: 'scale(1)' },
-                        }
-                    }
-                }
-            }
-        }
-    </script>
-    <style>
-        .ocean-bg {
-            background: linear-gradient(180deg, #0f4c75 0%, #1b6ca8 45%, #032b45 100%);
-            position: relative;
-            min-height: 100vh;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>George's Sea Turtle Token Board</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 
-        .sun-ray {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 100%;
-            background: radial-gradient(ellipse at 50% -10%, rgba(255, 255, 255, 0.22) 0%, rgba(255, 255, 255, 0) 70%);
-            pointer-events: none;
-        }
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            fredoka: ['Fredoka', 'sans-serif'],
+            nunito: ['Nunito', 'sans-serif'],
+          },
+          colors: {
+            ocean: {
+              deep: '#032b45',
+              dark: '#0f4c75',
+              mid: '#1b6ca8',
+              light: '#3282b8',
+              aqua: '#00b4d8',
+              cyan: '#90e0ef',
+              foam: '#caf0f8',
+            },
+            turtle: {
+              shell: '#2d6a4f',
+              shellLight: '#52b788',
+              skin: '#74c69d',
+              belly: '#b7e4c7',
+            },
+            sand: '#f4a261',
+            coral: '#ff70a6',
+          },
+          animation: {
+            'float-slow': 'float 6s ease-in-out infinite',
+            swim: 'swim 5s ease-in-out infinite',
+            bubble: 'bubble 6s linear infinite',
+            'pulse-glow': 'pulseGlow 2s infinite',
+            'bounce-short': 'bounceShort 0.4s ease-out',
+          },
+          keyframes: {
+            float: {
+              '0%, 100%': { transform: 'translateY(0px) rotate(0deg)' },
+              '50%': { transform: 'translateY(-8px) rotate(2deg)' },
+            },
+            swim: {
+              '0%, 100%': { transform: 'translateX(0) translateY(0) rotate(0deg)' },
+              '50%': { transform: 'translateX(6px) translateY(-4px) rotate(3deg)' },
+            },
+            bubble: {
+              '0%': { transform: 'translateY(100vh) scale(0.3)', opacity: '0' },
+              '20%': { opacity: '0.6' },
+              '80%': { opacity: '0.8' },
+              '100%': { transform: 'translateY(-10vh) scale(1.1)', opacity: '0' },
+            },
+            pulseGlow: {
+              '0%, 100%': { boxShadow: '0 0 12px rgba(0, 180, 216, 0.4)' },
+              '50%': { boxShadow: '0 0 24px rgba(0, 180, 216, 0.8)' },
+            },
+            bounceShort: {
+              '0%': { transform: 'scale(0.8)' },
+              '50%': { transform: 'scale(1.1)' },
+              '100%': { transform: 'scale(1)' },
+            },
+          },
+        },
+      },
+    };
+  </script>
 
-        .glass-panel {
-            background: rgba(15, 76, 117, 0.82);
-            backdrop-filter: blur(12px);
-            border: 2px solid rgba(144, 224, 239, 0.35);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
-        }
+  <style>
+    :root {
+      --ocean-1: #0f4c75;
+      --ocean-2: #1b6ca8;
+      --ocean-3: #032b45;
+      --cyan: #90e0ef;
+      --teal: #2dd4bf;
+      --amber: #f4a261;
+      --green: #52b788;
+      --slate: #0f172a;
+    }
 
-        .glass-card {
-            background: rgba(255, 255, 255, 0.12);
-            backdrop-filter: blur(8px);
-            border: 1px solid rgba(255, 255, 255, 0.22);
-        }
+    html, body {
+      margin: 0;
+      min-height: 100%;
+      font-family: 'Nunito', sans-serif;
+      background: linear-gradient(180deg, var(--ocean-1) 0%, var(--ocean-2) 45%, var(--ocean-3) 100%);
+    }
 
-        .drag-over {
-            border-color: #52b788 !important;
-            background-color: rgba(82, 183, 136, 0.3) !important;
-            transform: scale(1.08) !important;
-        }
+    body {
+      color: white;
+      overflow-x: hidden;
+      -webkit-tap-highlight-color: transparent;
+      user-select: none;
+    }
 
-        .touch-clone {
-            position: fixed;
-            pointer-events: none;
-            z-index: 9999;
-            transform: translate(-50%, -50%) scale(1.1);
-            transition: transform 0.05s ease;
-        }
+    .ocean-bg {
+      background: linear-gradient(180deg, #0f4c75 0%, #1b6ca8 45%, #032b45 100%);
+      position: relative;
+      min-height: 100vh;
+    }
 
-        * {
-            -webkit-tap-highlight-color: transparent;
-            user-select: none;
-        }
+    .sun-ray {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 50% -10%, rgba(255,255,255,0.22) 0%, rgba(255,255,255,0) 70%);
+      pointer-events: none;
+    }
 
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
-        ::-webkit-scrollbar-track {
-            background: rgba(3, 43, 69, 0.5);
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #00b4d8;
-            border-radius: 4px;
-        }
-    </style>
+    .glass-panel {
+      background: rgba(15, 76, 117, 0.82);
+      backdrop-filter: blur(12px);
+      border: 2px solid rgba(144, 224, 239, 0.35);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.35);
+    }
+
+    .glass-card {
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.22);
+      backdrop-filter: blur(8px);
+    }
+
+    .drag-over {
+      border-color: #52b788 !important;
+      background: rgba(82,183,136,0.3) !important;
+      transform: scale(1.08);
+    }
+
+    .touch-clone {
+      position: fixed;
+      pointer-events: none;
+      z-index: 9999;
+      transform: translate(-50%, -50%) scale(1.1);
+    }
+
+    .modal-visible {
+      opacity: 1 !important;
+      pointer-events: auto !important;
+    }
+
+    .modal-card-visible {
+      transform: scale(1) !important;
+    }
+
+    ::-webkit-scrollbar { width: 8px; }
+    ::-webkit-scrollbar-track { background: rgba(3,43,69,0.5); }
+    ::-webkit-scrollbar-thumb {
+      background: #00b4d8;
+      border-radius: 4px;
+    }
+  </style>
 </head>
-<body class="ocean-bg text-white font-nunito flex flex-col justify-between min-h-screen select-none overflow-x-hidden">
+<body class="ocean-bg text-white font-nunito flex flex-col min-h-screen overflow-x-hidden">
+  <div id="bubbles-container" class="fixed inset-0 pointer-events-none z-0"></div>
+  <div class="sun-ray z-0"></div>
 
-    <!-- Ambient Floating Bubbles Container -->
-    <div id="bubbles-container" class="fixed inset-0 pointer-events-none z-0"></div>
-    <div class="sun-ray z-0"></div>
+  <div class="relative z-10 flex flex-col min-h-screen justify-between p-3 sm:p-6 max-w-6xl mx-auto w-full">
+    <header class="flex flex-wrap justify-between items-center gap-3 mb-4 sm:mb-6">
+      <div class="flex items-center gap-3">
+        <div class="w-12 h-12 sm:w-16 sm:h-16 rounded-full bg-gradient-to-tr from-turtle-shell to-turtle-skin flex items-center justify-center shadow-lg border-2 border-cyan-300 animate-float-slow">
+          <svg class="w-9 h-9 sm:w-12 sm:h-12 text-white" viewBox="0 0 100 100" fill="none">
+            <path d="M 20 40 C 5 25, 0 45, 25 55" fill="#52b788" stroke="#1b4332" stroke-width="3"/>
+            <path d="M 80 40 C 95 25, 100 45, 75 55" fill="#52b788" stroke="#1b4332" stroke-width="3"/>
+            <path d="M 25 70 C 15 85, 30 90, 38 78" fill="#52b788" stroke="#1b4332" stroke-width="3"/>
+            <path d="M 75 70 C 85 85, 70 90, 62 78" fill="#52b788" stroke="#1b4332" stroke-width="3"/>
+            <circle cx="50" cy="22" r="14" fill="#74c69d" stroke="#1b4332" stroke-width="3"/>
+            <circle cx="45" cy="18" r="2.5" fill="#032b45"/>
+            <circle cx="55" cy="18" r="2.5" fill="#032b45"/>
+            <path d="M 46 25 Q 50 28 54 25" stroke="#032b45" stroke-width="2" stroke-linecap="round"/>
+            <ellipse cx="50" cy="56" rx="28" ry="30" fill="#2d6a4f" stroke="#1b4332" stroke-width="3.5"/>
+            <polygon points="50,38 62,48 58,64 42,64 38,48" fill="#52b788" stroke="#1b4332" stroke-width="1.5"/>
+          </svg>
+        </div>
 
-    <!-- MAIN APP CONTAINER -->
-    <div class="relative z-10 flex flex-col min-h-screen justify-between p-3 sm:p-6 max-w-6xl mx-auto w-full">
-        
-        <!-- HEADER -->
-        <header class="flex flex-wrap justify-between items-center gap-3 mb-4 sm:mb-6">
-            <div class="flex items-center gap-3">
-                <div class="w-12 h-12 sm:w-16 sm:h-16 rounded-full bg-gradient-to-tr from-turtle-shell to-turtle-skin flex items-center justify-center shadow-lg border-2 border-cyan-300 animate-float-slow shrink-0">
-                    <!-- Sea Turtle Logo SVG -->
-                    <svg class="w-9 h-9 sm:w-12 sm:h-12 text-white" viewBox="0 0 100 100" fill="none">
-                        <path d="M 20 40 C 5 25, 0 45, 25 55" fill="#52b788" stroke="#1b4332" stroke-width="3"/>
-                        <path d="M 80 40 C 95 25, 100 45, 75 55" fill="#52b788" stroke="#1b4332" stroke-width="3"/>
-                        <path d="M 25 70 C 15 85, 30 90, 38 78" fill="#52b788" stroke="#1b4332" stroke-width="3"/>
-                        <path d="M 75 70 C 85 85, 70 90, 62 78" fill="#52b788" stroke="#1b4332" stroke-width="3"/>
-                        <circle cx="50" cy="22" r="14" fill="#74c69d" stroke="#1b4332" stroke-width="3"/>
-                        <circle cx="45" cy="18" r="2.5" fill="#032b45"/>
-                        <circle cx="55" cy="18" r="2.5" fill="#032b45"/>
-                        <path d="M 46 25 Q 50 28 54 25" stroke="#032b45" stroke-width="2" stroke-linecap="round"/>
-                        <ellipse cx="50" cy="56" rx="28" ry="30" fill="#2d6a4f" stroke="#1b4332" stroke-width="3.5"/>
-                        <polygon points="50,38 62,48 58,64 42,64 38,48" fill="#52b788" stroke="#1b4332" stroke-width="1.5"/>
-                    </svg>
-                </div>
-                <div>
-                    <h1 class="font-fredoka text-2xl sm:text-4xl text-cyan-200 tracking-wide drop-shadow-md">
-                        George's Sea Turtle Board
-                    </h1>
-                    
-                    <div class="flex flex-wrap items-center gap-2 text-xs sm:text-sm font-bold mt-0.5">
-                        <!-- Live Sync Status Indicator -->
-                        <span id="sync-status" class="inline-flex items-center gap-1.5 text-emerald-300 bg-emerald-950/80 px-3 py-1 rounded-full border border-emerald-400/50 shadow-sm">
-                            <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-ping"></span>
-                            <span id="sync-text">🟢 Cloud Synced Live Across Devices</span>
-                        </span>
+        <div>
+          <h1 class="font-fredoka text-2xl sm:text-4xl text-cyan-200 tracking-wide drop-shadow-md">George's Sea Turtle Board</h1>
+          <div class="flex flex-wrap items-center gap-2 text-xs sm:text-sm font-bold mt-0.5">
+            <span id="sync-status" class="inline-flex items-center gap-1.5 text-emerald-300 bg-emerald-950/80 px-3 py-1 rounded-full border border-emerald-400/50 shadow-sm">
+              <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-ping"></span>
+              <span id="sync-text">🟢 Cloud Synced Live Across Devices</span>
+            </span>
 
-                        <!-- Connected Workspace Badge -->
-                        <button id="gdrive-status-btn" class="inline-flex items-center gap-1.5 text-blue-200 bg-blue-950/80 px-3 py-1 rounded-full border border-blue-400/50 shadow-sm hover:bg-blue-900 transition">
-                            <i class="fa-brands fa-google-drive text-amber-400 text-xs"></i>
-                            <span>Kevin.tudor@brightmontacademy.com</span>
-                        </button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Header Action Controls -->
-            <div class="flex flex-wrap items-center gap-2">
-                <!-- Copy Board Link Button -->
-                <button id="share-link-btn" class="px-3.5 py-2 rounded-2xl bg-gradient-to-r from-cyan-400 to-teal-300 text-slate-950 hover:brightness-110 active:scale-95 transition flex items-center gap-1.5 text-xs sm:text-sm font-fredoka font-bold shadow-md">
-                    <i class="fa-solid fa-share-nodes"></i>
-                    <span>Share Board Link</span>
-                </button>
-
-                <!-- Drive Integration Modal Button -->
-                <button id="gdrive-modal-btn" class="px-3.5 py-2 rounded-2xl glass-card text-amber-300 hover:bg-white/20 active:scale-95 transition flex items-center gap-1.5 text-xs sm:text-sm font-bold shadow-md">
-                    <i class="fa-brands fa-google-drive text-amber-400"></i>
-                    <span>Drive & Export</span>
-                </button>
-
-                <!-- Sound Toggle -->
-                <button id="sound-toggle-btn" class="px-3 py-2 rounded-2xl glass-card text-cyan-200 hover:bg-white/20 active:scale-95 transition flex items-center gap-1.5 text-xs sm:text-sm font-bold shadow-md">
-                    <i id="sound-icon" class="fa-solid fa-volume-high text-cyan-300"></i>
-                    <span id="sound-text" class="hidden sm:inline">Sound ON</span>
-                </button>
-
-                <!-- History Archive Modal -->
-                <button id="history-modal-btn" class="px-3 py-2 rounded-2xl glass-card text-cyan-200 hover:bg-white/20 active:scale-95 transition flex items-center gap-1.5 text-xs sm:text-sm font-bold shadow-md">
-                    <i class="fa-solid fa-clock-rotate-left text-amber-300"></i>
-                    <span>History</span>
-                </button>
-
-                <!-- Board Reset Button -->
-                <button id="trigger-reset-btn" class="px-3.5 py-2 rounded-2xl bg-gradient-to-r from-amber-500 to-sand text-slate-950 font-fredoka hover:brightness-110 active:scale-95 transition flex items-center gap-1.5 text-xs sm:text-sm font-bold shadow-md">
-                    <i class="fa-solid fa-rotate-left"></i>
-                    <span>Reset</span>
-                </button>
-            </div>
-        </header>
-
-        <!-- REWARD & AWARDER CONTROL PANEL -->
-        <section class="glass-panel rounded-3xl p-4 sm:p-6 mb-4 sm:mb-6">
-            <div class="grid grid-cols-1 lg:grid-cols-12 gap-4 items-center">
-                
-                <!-- Target Reward Input & Presets -->
-                <div class="lg:col-span-6">
-                    <label class="block text-xs uppercase tracking-wider text-cyan-200 font-bold mb-1">
-                        <i class="fa-solid fa-trophy text-amber-300 mr-1"></i> George is working for:
-                    </label>
-                    <input type="text" id="reward-input" placeholder="Enter reward goal..." 
-                        class="w-full bg-slate-900/80 text-amber-300 placeholder-cyan-200/40 font-fredoka text-lg sm:text-2xl px-4 py-2 rounded-2xl border-2 border-cyan-400/50 focus:border-cyan-300 focus:outline-none focus:ring-4 focus:ring-cyan-400/20 transition shadow-inner"
-                        value="YouTube Video" />
-                    
-                    <!-- Reward Presets -->
-                    <div class="flex flex-wrap gap-1.5 mt-2">
-                        <span class="text-xs text-cyan-200/80 font-bold self-center mr-1">Presets:</span>
-                        <button class="reward-preset-btn text-xs px-3 py-1 rounded-full bg-white/10 hover:bg-cyan-400/30 text-cyan-100 transition border border-white/15 font-bold" data-reward="YouTube Video">📺 YouTube Video</button>
-                        <button class="reward-preset-btn text-xs px-3 py-1 rounded-full bg-white/10 hover:bg-cyan-400/30 text-cyan-100 transition border border-white/15 font-bold" data-reward="A turtle">🐢 A turtle</button>
-                        <button class="reward-preset-btn text-xs px-3 py-1 rounded-full bg-white/10 hover:bg-cyan-400/30 text-cyan-100 transition border border-white/15 font-bold" data-reward="Tinkercad">💻 Tinkercad</button>
-                        <button class="reward-preset-btn text-xs px-3 py-1 rounded-full bg-white/10 hover:bg-cyan-400/30 text-cyan-100 transition border border-white/15 font-bold" data-reward="Walk">🚶 Walk</button>
-                    </div>
-                </div>
-
-                <!-- Active Awarder Selector & Custom Input -->
-                <div class="lg:col-span-6 flex flex-col justify-between">
-                    <label class="block text-xs uppercase tracking-wider text-cyan-200 font-bold mb-1">
-                        <i class="fa-solid fa-user-check text-emerald-300 mr-1"></i> Currently Awarding As:
-                    </label>
-                    <div class="flex flex-wrap sm:flex-nowrap gap-2 mb-2">
-                        <button id="awarder-teacher-btn" class="awarder-toggle-btn flex-1 py-2 px-3 rounded-xl bg-emerald-400 text-slate-950 font-fredoka font-bold text-sm shadow transition border-2 border-emerald-300 flex items-center justify-center gap-1.5">
-                            <span>👩‍🏫 Teacher</span>
-                        </button>
-                        <button id="awarder-therapist-btn" class="awarder-toggle-btn flex-1 py-2 px-3 rounded-xl bg-white/10 hover:bg-white/20 text-cyan-100 font-fredoka font-bold text-sm shadow transition border border-white/20 flex items-center justify-center gap-1.5">
-                            <span>👨‍⚕️ Therapist</span>
-                        </button>
-                        <input type="text" id="custom-awarder-input" placeholder="Or custom name..." 
-                            class="flex-1 min-w-[130px] bg-slate-900/80 text-cyan-100 placeholder-cyan-200/40 font-bold text-xs px-3 py-2 rounded-xl border border-cyan-400/40 focus:border-cyan-300 focus:outline-none" />
-                    </div>
-                    
-                    <!-- Direct Token Increment / Decrement Action Buttons -->
-                    <div class="flex items-center gap-2">
-                        <button id="add-token-btn" class="flex-1 py-3 rounded-2xl bg-gradient-to-r from-emerald-400 via-teal-400 to-cyan-400 text-slate-950 font-fredoka text-base sm:text-lg font-bold hover:brightness-110 active:scale-95 transition shadow-lg flex items-center justify-center gap-2 border border-emerald-200">
-                            <i class="fa-solid fa-plus-circle text-xl"></i>
-                            <span>+1 Add Token</span>
-                        </button>
-                        <button id="remove-token-btn" class="px-4 py-3 rounded-2xl bg-rose-500/30 hover:bg-rose-500/50 text-rose-200 border border-rose-400/40 font-fredoka text-sm font-bold active:scale-95 transition flex items-center justify-center gap-1.5" title="Remove last token">
-                            <i class="fa-solid fa-minus-circle text-base"></i>
-                            <span>-1 Remove</span>
-                        </button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Visual Progress Bar -->
-            <div class="mt-4 border-t border-white/10 pt-3">
-                <div class="flex justify-between items-center text-xs font-bold text-cyan-200 mb-1">
-                    <span id="progress-text" class="text-sm font-bold text-cyan-100">0 of 5 Tokens Earned</span>
-                    <span id="progress-percent" class="text-amber-300 font-fredoka text-base">0%</span>
-                </div>
-                <div class="w-full bg-slate-900/80 h-4 rounded-full p-1 border border-cyan-400/30 relative overflow-hidden shadow-inner">
-                    <div id="progress-bar-fill" class="h-full bg-gradient-to-r from-teal-400 via-cyan-300 to-amber-300 rounded-full transition-all duration-300 ease-out shadow-lg" style="width: 0%;"></div>
-                </div>
-            </div>
-        </section>
-
-        <!-- DRAG-AND-DROP DOCK & 5 SCALLOP SHELL SLOTS -->
-        <main class="flex-1 glass-panel rounded-3xl p-4 sm:p-6 mb-4 sm:mb-6 flex flex-col justify-center items-center relative overflow-hidden">
-            
-            <!-- Draggable Turtle Bank Dock -->
-            <div class="w-full max-w-2xl bg-slate-900/70 border border-cyan-400/40 rounded-2xl p-3 mb-5 flex flex-col sm:flex-row items-center justify-between gap-3 shadow-inner z-10">
-                <div class="flex items-center gap-2.5">
-                    <span class="w-9 h-9 rounded-full bg-emerald-400/20 text-emerald-300 flex items-center justify-center text-xl border border-emerald-400/40 shadow">
-                        🐢
-                    </span>
-                    <div>
-                        <span class="font-fredoka text-sm text-amber-300 font-bold block">Sea Turtle Token Bank</span>
-                        <span class="text-xs text-cyan-200/90 font-semibold">Click any empty shell slot, tap "+1 Add Token", or drag a turtle onto a slot!</span>
-                    </div>
-                </div>
-                
-                <!-- Draggable Turtle Source Element -->
-                <div id="turtle-bank-drag-source" 
-                     draggable="true" 
-                     class="cursor-grab active:cursor-grabbing px-4 py-2 bg-gradient-to-r from-teal-500 to-emerald-500 rounded-xl border-2 border-cyan-200 text-slate-950 font-fredoka font-bold text-sm shadow-md hover:scale-105 transition flex items-center gap-2">
-                    <!-- Mini Turtle Icon SVG -->
-                    <svg class="w-6 h-6" viewBox="0 0 100 100" fill="none">
-                        <path d="M 20 40 C 5 25, 0 45, 25 55" fill="#52b788" stroke="#1b4332" stroke-width="3"/>
-                        <path d="M 80 40 C 95 25, 100 45, 75 55" fill="#52b788" stroke="#1b4332" stroke-width="3"/>
-                        <circle cx="50" cy="22" r="14" fill="#74c69d" stroke="#1b4332" stroke-width="3"/>
-                        <circle cx="45" cy="18" r="2.5" fill="#032b45"/>
-                        <circle cx="55" cy="18" r="2.5" fill="#032b45"/>
-                        <ellipse cx="50" cy="56" rx="28" ry="30" fill="#2d6a4f" stroke="#1b4332" stroke-width="3.5"/>
-                    </svg>
-                    <span>Drag Turtle ✋</span>
-                </div>
-            </div>
-
-            <!-- 5 Fixed Scallop Shell Slots Grid -->
-            <div id="slots-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3 sm:gap-5 w-full max-w-5xl justify-items-center items-center py-2 z-10">
-                <!-- 5 Shell Slots rendered via JS -->
-            </div>
-        </main>
-
-        <!-- REAL-TIME ACTIVITY LOG FOOTER -->
-        <footer class="glass-panel rounded-3xl p-4 sm:p-5">
-            <div class="flex items-center justify-between mb-2 border-b border-white/10 pb-2">
-                <h3 class="font-fredoka text-lg text-cyan-200 flex items-center gap-2">
-                    <i class="fa-solid fa-list-check text-amber-300"></i>
-                    <span>Real-Time Cloud Activity Log</span>
-                </h3>
-                <div class="flex items-center gap-2">
-                    <span id="log-count-badge" class="text-xs bg-cyan-400/20 text-cyan-200 px-3 py-1 rounded-full font-bold border border-cyan-400/30">
-                        0 actions logged
-                    </span>
-                    <button id="clear-log-btn" class="text-xs text-rose-300 hover:text-rose-100 bg-rose-500/20 hover:bg-rose-500/30 px-2.5 py-1 rounded-full border border-rose-400/30 transition">
-                        Clear Log
-                    </button>
-                </div>
-            </div>
-
-            <!-- Activity Items Feed -->
-            <div id="activity-log-feed" class="max-h-36 overflow-y-auto pr-1 space-y-1.5">
-                <div class="text-center py-4 text-cyan-200/50 text-sm font-semibold">
-                    No tokens awarded yet today. Click "+1 Add Token" or tap an empty shell slot!
-                </div>
-            </div>
-        </footer>
-    </div>
-
-    <!-- MODAL 1: GOOGLE DRIVE & WORKSPACE INTEGRATION -->
-    <div id="gdrive-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md opacity-0 pointer-events-none transition-opacity duration-300">
-        <div class="glass-panel border-2 border-amber-300 rounded-3xl max-w-md w-full p-5 sm:p-6 shadow-2xl transform scale-90 transition-transform duration-300" id="gdrive-card">
-            
-            <div class="flex justify-between items-center mb-4 border-b border-white/10 pb-3">
-                <div class="flex items-center gap-2.5">
-                    <div class="w-10 h-10 rounded-full bg-amber-400/20 text-amber-300 flex items-center justify-center text-xl font-bold border border-amber-400/30">
-                        <i class="fa-brands fa-google-drive"></i>
-                    </div>
-                    <div>
-                        <h2 class="font-fredoka text-xl text-amber-300">Google Drive & Reports</h2>
-                        <p class="text-xs text-cyan-200/80">Workspace Integration</p>
-                    </div>
-                </div>
-                <button id="close-gdrive-modal-btn" class="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 text-cyan-200 flex items-center justify-center transition">
-                    <i class="fa-solid fa-xmark text-lg"></i>
-                </button>
-            </div>
-
-            <div class="bg-slate-900/80 rounded-2xl p-3.5 border border-cyan-400/30 text-xs text-cyan-100 font-semibold mb-4 space-y-2">
-                <div class="flex items-center gap-2">
-                    <i class="fa-solid fa-user-check text-emerald-400 text-sm"></i>
-                    <span>Target Workspace: <strong class="text-white underline">Kevin.tudor@brightmontacademy.com</strong></span>
-                </div>
-                <div class="flex items-center gap-2">
-                    <i class="fa-solid fa-folder-closed text-amber-300 text-sm"></i>
-                    <span>Target Folder: <strong class="text-amber-300">George Token Board - Brightmont</strong></span>
-                </div>
-                <div class="flex items-center gap-2">
-                    <i class="fa-solid fa-cloud-arrow-up text-cyan-300 text-sm"></i>
-                    <span>Live cloud sync active across all shared links</span>
-                </div>
-            </div>
-
-            <div class="space-y-2.5 mb-4">
-                <button id="export-csv-btn" class="w-full py-3 px-4 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-400 text-slate-950 font-fredoka font-bold text-sm hover:brightness-110 active:scale-95 transition shadow-md flex items-center justify-center gap-2">
-                    <i class="fa-solid fa-file-csv text-lg"></i>
-                    <span>Export Activity Log to CSV Report</span>
-                </button>
-
-                <button id="download-json-btn" class="w-full py-2.5 px-4 rounded-xl bg-slate-800 hover:bg-slate-700 text-cyan-200 font-bold text-xs border border-cyan-400/40 transition flex items-center justify-center gap-2">
-                    <i class="fa-solid fa-file-code text-amber-300"></i>
-                    <span>Download Complete Snapshot (.json)</span>
-                </button>
-            </div>
-
-            <button id="close-gdrive-card-btn" class="w-full py-2 rounded-xl bg-slate-800/80 text-cyan-200 font-fredoka font-bold text-xs transition">
-                Close Window
+            <button id="gdrive-status-btn" class="inline-flex items-center gap-1.5 text-blue-200 bg-blue-950/80 px-3 py-1 rounded-full border border-blue-400/50 shadow-sm hover:bg-blue-900/80 transition">
+              <i class="fa-brands fa-google-drive text-amber-400 text-xs"></i>
+              <span>Kevin.tudor@brightmontacademy.com</span>
             </button>
+          </div>
         </div>
-    </div>
+      </div>
 
-    <!-- MODAL 2: HISTORY ARCHIVE MODAL -->
-    <div id="history-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md opacity-0 pointer-events-none transition-opacity duration-300">
-        <div class="glass-panel border-2 border-cyan-300 rounded-3xl max-w-lg w-full p-5 sm:p-6 shadow-2xl transform scale-90 transition-transform duration-300 flex flex-col max-h-[80vh]" id="history-card">
-            <div class="flex justify-between items-center mb-4 border-b border-white/10 pb-3">
-                <h3 class="font-fredoka text-xl text-amber-300 flex items-center gap-2">
-                    <i class="fa-solid fa-box-archive text-amber-400"></i>
-                    <span>George's Completed Session Archive</span>
-                </h3>
-                <button id="close-history-modal-btn" class="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 text-cyan-200 flex items-center justify-center transition">
-                    <i class="fa-solid fa-xmark text-lg"></i>
-                </button>
-            </div>
+      <div class="flex flex-wrap items-center gap-2">
+        <button id="share-link-btn" class="px-3.5 py-2 rounded-2xl bg-gradient-to-r from-cyan-400 to-teal-300 text-slate-950 hover:brightness-110 active:scale-95 transition flex items-center gap-1.5 text-xs sm:text-sm font-bold shadow-md">
+          <i class="fa-solid fa-share-nodes"></i>
+          <span>Share Board Link</span>
+        </button>
 
-            <div id="history-feed" class="flex-1 overflow-y-auto pr-1 space-y-2.5">
-                <!-- Dynamically filled -->
-            </div>
+        <button id="gdrive-modal-btn" class="px-3.5 py-2 rounded-2xl glass-card text-amber-300 hover:bg-white/20 active:scale-95 transition flex items-center gap-1.5 text-xs sm:text-sm font-bold">
+          <i class="fa-brands fa-google-drive text-amber-400"></i>
+          <span>Drive & Export</span>
+        </button>
 
-            <div class="mt-4 pt-3 border-t border-white/10 text-right">
-                <button id="close-history-btn" class="px-5 py-2 rounded-xl bg-slate-800 text-cyan-200 font-fredoka font-bold text-xs transition">
-                    Close
-                </button>
-            </div>
+        <button id="sound-toggle-btn" class="px-3 py-2 rounded-2xl glass-card text-cyan-200 hover:bg-white/20 active:scale-95 transition flex items-center gap-1.5 text-xs sm:text-sm font-bold">
+          <i id="sound-icon" class="fa-solid fa-volume-high text-cyan-300"></i>
+          <span id="sound-text" class="hidden sm:inline">Sound ON</span>
+        </button>
+
+        <button id="history-modal-btn" class="px-3 py-2 rounded-2xl glass-card text-cyan-200 hover:bg-white/20 active:scale-95 transition flex items-center gap-1.5 text-xs sm:text-sm font-bold">
+          <i class="fa-solid fa-clock-rotate-left text-amber-300"></i>
+          <span>History</span>
+        </button>
+
+        <button id="trigger-reset-btn" class="px-3.5 py-2 rounded-2xl bg-gradient-to-r from-amber-500 to-sand text-slate-950 font-fredoka hover:brightness-110 active:scale-95 transition flex items-center gap-1.5 text-xs sm:text-sm font-bold shadow-md">
+          <i class="fa-solid fa-rotate-left"></i>
+          <span>Reset</span>
+        </button>
+      </div>
+    </header>
+
+    <section class="glass-panel rounded-3xl p-4 sm:p-6 mb-4 sm:mb-6">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-4 items-center">
+        <div class="lg:col-span-6">
+          <label class="block text-xs uppercase tracking-wider text-cyan-200 font-bold mb-1">
+            <i class="fa-solid fa-trophy text-amber-300 mr-1"></i> George is working for:
+          </label>
+          <input id="reward-input" type="text" value="YouTube Video" placeholder="Enter reward goal..." class="w-full bg-slate-900/80 text-amber-300 placeholder-cyan-200/40 font-fredoka text-lg sm:text-2xl px-4 py-2 rounded-2xl border-2 border-cyan-400/50 focus:border-cyan-300 focus:outline-none shadow-inner" />
+
+          <div class="flex flex-wrap gap-1.5 mt-2">
+            <span class="text-xs text-cyan-200/80 font-bold self-center mr-1">Presets:</span>
+            <button class="reward-preset-btn text-xs px-3 py-1 rounded-full bg-white/10 hover:bg-cyan-400/30 text-cyan-100 transition border border-white/15 font-bold" data-reward="YouTube Video">YouTube</button>
+            <button class="reward-preset-btn text-xs px-3 py-1 rounded-full bg-white/10 hover:bg-cyan-400/30 text-cyan-100 transition border border-white/15 font-bold" data-reward="A turtle">A turtle</button>
+            <button class="reward-preset-btn text-xs px-3 py-1 rounded-full bg-white/10 hover:bg-cyan-400/30 text-cyan-100 transition border border-white/15 font-bold" data-reward="Tinkercad">Tinkercad</button>
+            <button class="reward-preset-btn text-xs px-3 py-1 rounded-full bg-white/10 hover:bg-cyan-400/30 text-cyan-100 transition border border-white/15 font-bold" data-reward="Walk">Walk</button>
+          </div>
         </div>
-    </div>
 
-    <!-- MODAL 3: RESET CONFIRMATION MODAL -->
-    <div id="reset-confirm-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md opacity-0 pointer-events-none transition-opacity duration-300">
-        <div class="glass-panel border-2 border-amber-400 rounded-3xl max-w-md w-full p-6 text-center shadow-2xl transform scale-90 transition-transform duration-300" id="reset-confirm-card">
-            <div class="w-14 h-14 mx-auto mb-3 rounded-full bg-amber-400/20 text-amber-300 flex items-center justify-center text-2xl border border-amber-400/40">
-                <i class="fa-solid fa-rotate-left"></i>
-            </div>
-            <h3 class="font-fredoka text-2xl text-amber-300 mb-2">Reset George's Token Board?</h3>
-            <p class="text-xs text-cyan-100 font-semibold mb-5">
-                Would you like to save today's completed tokens to the session archive before starting a new goal?
-            </p>
+        <div class="lg:col-span-6 flex flex-col justify-between">
+          <label class="block text-xs uppercase tracking-wider text-cyan-200 font-bold mb-1">
+            <i class="fa-solid fa-user-check text-emerald-300 mr-1"></i> Currently Awarding As:
+          </label>
 
-            <div class="flex flex-col gap-2">
-                <button id="confirm-save-reset-btn" class="w-full py-3 rounded-xl bg-gradient-to-r from-emerald-400 to-teal-500 text-slate-950 font-fredoka font-bold text-sm hover:brightness-110 active:scale-95 transition shadow-md">
-                    <i class="fa-solid fa-box-archive mr-1.5"></i> Save Session to History & Reset Board
-                </button>
-                <button id="confirm-just-reset-btn" class="w-full py-2.5 rounded-xl bg-amber-500/80 hover:bg-amber-500 text-slate-950 font-fredoka font-bold text-xs transition">
-                    Just Reset Board
-                </button>
-                <button id="cancel-reset-btn" class="w-full py-2 rounded-xl bg-slate-800 text-cyan-200 font-fredoka font-bold text-xs transition">
-                    Cancel
-                </button>
-            </div>
+          <div class="flex flex-wrap sm:flex-nowrap gap-2 mb-2">
+            <button id="awarder-teacher-btn" class="awarder-toggle-btn flex-1 py-2 px-3 rounded-xl bg-emerald-400 text-slate-950 font-fredoka font-bold text-sm shadow transition border-2 border-emerald-300 flex items-center justify-center gap-1">
+              <span>👩‍🏫</span>
+              <span>Teacher</span>
+            </button>
+            <button id="awarder-therapist-btn" class="awarder-toggle-btn flex-1 py-2 px-3 rounded-xl bg-white/10 hover:bg-white/20 text-cyan-100 font-fredoka font-bold text-sm shadow transition border border-white/20 flex items-center justify-center gap-1">
+              <span>👨‍⚕️</span>
+              <span>Therapist</span>
+            </button>
+            <input id="custom-awarder-input" type="text" placeholder="Or custom name..." class="flex-1 min-w-[130px] bg-slate-900/80 text-cyan-100 placeholder-cyan-200/40 font-bold text-xs px-3 py-2 rounded-xl border border-cyan-400/40 focus:border-cyan-300 focus:outline-none" />
+          </div>
+
+          <div class="flex items-center gap-2">
+            <button id="add-token-btn" class="flex-1 py-3 rounded-2xl bg-gradient-to-r from-emerald-400 via-teal-400 to-cyan-400 text-slate-950 font-fredoka text-base sm:text-lg font-bold hover:brightness-110 active:scale-95 transition shadow-lg flex items-center justify-center gap-2">
+              <i class="fa-solid fa-plus-circle text-xl"></i>
+              <span>+1 Add Token</span>
+            </button>
+            <button id="remove-token-btn" class="px-4 py-3 rounded-2xl bg-rose-500/30 hover:bg-rose-500/50 text-rose-200 border border-rose-400/40 font-fredoka text-sm font-bold active:scale-95 transition flex items-center justify-center gap-1">
+              <i class="fa-solid fa-minus-circle text-base"></i>
+              <span>-1 Remove</span>
+            </button>
+          </div>
         </div>
-    </div>
+      </div>
 
-    <!-- MODAL 4: VICTORY CELEBRATION MODAL -->
-    <div id="victory-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/85 backdrop-blur-md opacity-0 pointer-events-none transition-opacity duration-500">
-        <!-- Confetti Canvas -->
-        <canvas id="confetti-canvas" class="absolute inset-0 pointer-events-none z-0"></canvas>
-        
-        <div class="glass-panel border-4 border-amber-300 rounded-3xl max-w-md w-full p-6 text-center shadow-2xl transform scale-90 transition-transform duration-500 relative z-10" id="victory-card">
-            <!-- Crowned Sea Turtle SVG Icon -->
-            <div class="w-28 h-28 mx-auto mb-3 rounded-full bg-gradient-to-tr from-amber-400 to-teal-300 p-1 shadow-xl border-2 border-white animate-bounce-short relative flex items-center justify-center">
-                <!-- Crown SVG -->
-                <svg class="w-10 h-10 absolute -top-4 text-amber-300 drop-shadow-md z-20" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M5 16L3 5l5.5 5L12 4l3.5 6L21 5l-2 11H5zm14 3c0 .6-.4 1-1 1H6c-.6 0-1-.4-1-1v-1h14v1z"/>
-                </svg>
-                <div class="w-full h-full rounded-full bg-slate-900 flex items-center justify-center text-5xl">
-                    🐢
-                </div>
-            </div>
-            
-            <h2 class="font-fredoka text-3xl sm:text-4xl text-amber-300 mb-1 drop-shadow-md">
-                GREAT JOB GEORGE! 🎉
-            </h2>
-            <p class="text-base text-cyan-100 font-bold mb-4">
-                You earned all 5 sea turtle tokens!
-            </p>
-
-            <div class="bg-gradient-to-r from-teal-500/30 to-cyan-500/30 border-2 border-amber-300/60 rounded-2xl p-4 mb-6 shadow-inner">
-                <span class="block text-xs uppercase tracking-wider text-cyan-200 font-bold mb-1">Your Earned Reward:</span>
-                <span id="victory-reward-text" class="font-fredoka text-2xl text-amber-300 block">YouTube Video</span>
-            </div>
-
-            <div class="flex flex-col gap-2.5">
-                <button id="victory-new-session-btn" class="w-full py-3.5 rounded-2xl bg-gradient-to-r from-emerald-400 via-teal-400 to-amber-300 text-slate-950 font-fredoka font-bold text-lg hover:brightness-110 active:scale-95 transition shadow-lg">
-                    Start Next Session! 🚀
-                </button>
-                <button id="close-victory-btn" class="w-full py-2.5 rounded-2xl bg-slate-800 text-cyan-200 font-fredoka font-bold text-xs transition">
-                    Keep Viewing Tokens
-                </button>
-            </div>
+      <div class="mt-4 border-t border-white/10 pt-3">
+        <div class="flex justify-between items-center text-xs font-bold text-cyan-200 mb-1">
+          <span id="progress-text" class="text-sm font-bold text-cyan-100">0 of 5 Tokens Earned</span>
+          <span id="progress-percent" class="text-amber-300 font-fredoka text-base">0%</span>
         </div>
+        <div class="w-full bg-slate-900/80 h-4 rounded-full p-1 border border-cyan-400/30 relative overflow-hidden shadow-inner">
+          <div id="progress-bar-fill" class="h-full bg-gradient-to-r from-teal-400 via-cyan-300 to-amber-300 rounded-full transition-all duration-300 ease-out shadow-lg" style="width: 0%;"></div>
+        </div>
+      </div>
+    </section>
+
+    <main class="flex-1 glass-panel rounded-3xl p-4 sm:p-6 mb-4 sm:mb-6 flex flex-col justify-center items-center relative overflow-hidden">
+      <div class="w-full max-w-2xl bg-slate-900/70 border border-cyan-400/40 rounded-2xl p-3 mb-5 flex flex-col sm:flex-row items-center justify-between gap-3 shadow-inner z-10">
+        <div class="flex items-center gap-2.5">
+          <span class="w-9 h-9 rounded-full bg-emerald-400/20 text-emerald-300 flex items-center justify-center text-xl border border-emerald-400/40 shadow">🐢</span>
+          <div>
+            <span class="font-fredoka text-sm text-amber-300 font-bold block">Sea Turtle Token Bank</span>
+            <span class="text-xs text-cyan-200/90 font-semibold">Click any empty shell slot, tap "+1 Add Token", or drag a turtle onto a slot!</span>
+          </div>
+        </div>
+
+        <div id="turtle-bank-drag-source" draggable="true" class="cursor-grab active:cursor-grabbing px-4 py-2 bg-gradient-to-r from-teal-500 to-emerald-500 rounded-xl border-2 border-cyan-200 text-slate-950 font-fredoka font-bold text-sm shadow-md flex items-center gap-2 select-none">
+          <svg class="w-6 h-6" viewBox="0 0 100 100" fill="none">
+            <path d="M 20 40 C 5 25, 0 45, 25 55" fill="#52b788" stroke="#1b4332" stroke-width="3"/>
+            <path d="M 80 40 C 95 25, 100 45, 75 55" fill="#52b788" stroke="#1b4332" stroke-width="3"/>
+            <circle cx="50" cy="22" r="14" fill="#74c69d" stroke="#1b4332" stroke-width="3"/>
+            <circle cx="45" cy="18" r="2.5" fill="#032b45"/>
+            <circle cx="55" cy="18" r="2.5" fill="#032b45"/>
+            <ellipse cx="50" cy="56" rx="28" ry="30" fill="#2d6a4f" stroke="#1b4332" stroke-width="3.5"/>
+          </svg>
+          <span>Drag Turtle ✋</span>
+        </div>
+      </div>
+
+      <div id="slots-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3 sm:gap-5 w-full max-w-5xl justify-items-center items-center py-2 z-10"></div>
+    </main>
+
+    <footer class="glass-panel rounded-3xl p-4 sm:p-5">
+      <div class="flex items-center justify-between mb-2 border-b border-white/10 pb-2">
+        <h3 class="font-fredoka text-lg text-cyan-200 flex items-center gap-2">
+          <i class="fa-solid fa-list-check text-amber-300"></i>
+          <span>Real-Time Cloud Activity Log</span>
+        </h3>
+        <div class="flex items-center gap-2">
+          <span id="log-count-badge" class="text-xs bg-cyan-400/20 text-cyan-200 px-3 py-1 rounded-full font-bold border border-cyan-400/30">0 actions logged</span>
+          <button id="clear-log-btn" class="text-xs text-rose-300 hover:text-rose-100 bg-rose-500/20 hover:bg-rose-500/30 px-2.5 py-1 rounded-full border border-rose-400/30 transition">Clear Log</button>
+        </div>
+      </div>
+
+      <div id="activity-log-feed" class="max-h-36 overflow-y-auto pr-1 space-y-1.5">
+        <div class="text-center py-4 text-cyan-200/50 text-sm font-semibold">No tokens awarded yet today. Click "+1 Add Token" or tap an empty shell slot!</div>
+      </div>
+    </footer>
+  </div>
+
+  <div id="gdrive-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md opacity-0 pointer-events-none transition-opacity duration-300">
+    <div id="gdrive-card" class="glass-panel border-2 border-amber-300 rounded-3xl max-w-md w-full p-5 sm:p-6 shadow-2xl transform scale-90 transition-transform duration-300">
+      <div class="flex justify-between items-center mb-4 border-b border-white/10 pb-3">
+        <div class="flex items-center gap-2.5">
+          <div class="w-10 h-10 rounded-full bg-amber-400/20 text-amber-300 flex items-center justify-center text-xl font-bold border border-amber-400/30">
+            <i class="fa-brands fa-google-drive"></i>
+          </div>
+          <div>
+            <h2 class="font-fredoka text-xl text-amber-300">Google Drive & Reports</h2>
+            <p class="text-xs text-cyan-200/80">Workspace Integration</p>
+          </div>
+        </div>
+        <button id="close-gdrive-modal-btn" class="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 text-cyan-200 flex items-center justify-center transition"><i class="fa-solid fa-xmark text-lg"></i></button>
+      </div>
+
+      <div class="bg-slate-900/80 rounded-2xl p-3.5 border border-cyan-400/30 text-xs text-cyan-100 font-semibold mb-4 space-y-2">
+        <div class="flex items-center gap-2"><i class="fa-solid fa-user-check text-emerald-400 text-sm"></i><span>Target Workspace: <strong class="text-white underline">Kevin.tudor@brightmontacademy.com</strong></span></div>
+        <div class="flex items-center gap-2"><i class="fa-solid fa-folder-closed text-amber-300 text-sm"></i><span>Target Folder: <strong class="text-amber-300">George Token Board - Brightmont</strong></span></div>
+        <div class="flex items-center gap-2"><i class="fa-solid fa-cloud-arrow-up text-cyan-300 text-sm"></i><span>Live cloud sync active across all shared links</span></div>
+      </div>
+
+      <div class="space-y-2.5 mb-4">
+        <button id="export-csv-btn" class="w-full py-3 px-4 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-400 text-slate-950 font-fredoka font-bold text-sm hover:brightness-110 active:scale-95 transition flex items-center justify-center gap-2">
+          <i class="fa-solid fa-file-csv text-lg"></i>
+          <span>Export Activity Log to CSV Report</span>
+        </button>
+
+        <button id="download-json-btn" class="w-full py-2.5 px-4 rounded-xl bg-slate-800 hover:bg-slate-700 text-cyan-200 font-bold text-xs border border-cyan-400/40 transition flex items-center justify-center gap-2">
+          <i class="fa-solid fa-file-code text-amber-300"></i>
+          <span>Download Complete Snapshot (.json)</span>
+        </button>
+      </div>
+
+      <button id="close-gdrive-card-btn" class="w-full py-2 rounded-xl bg-slate-800/80 text-cyan-200 font-fredoka font-bold text-xs transition">Close Window</button>
     </div>
+  </div>
 
-    <!-- TOAST NOTIFICATION POPUP -->
-    <div id="toast" class="fixed bottom-6 right-6 z-50 transform translate-y-20 opacity-0 pointer-events-none transition-all duration-300 bg-emerald-400 text-slate-950 px-4 py-3 rounded-2xl border-2 border-emerald-200 shadow-2xl font-fredoka font-bold text-sm flex items-center gap-2">
-        <i class="fa-solid fa-circle-check text-lg"></i>
-        <span id="toast-text">Action completed successfully!</span>
+  <div id="history-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md opacity-0 pointer-events-none transition-opacity duration-300">
+    <div id="history-card" class="glass-panel border-2 border-cyan-300 rounded-3xl max-w-lg w-full p-5 sm:p-6 shadow-2xl transform scale-90 transition-transform duration-300 flex flex-col max-h-[80vh]">
+      <div class="flex justify-between items-center mb-4 border-b border-white/10 pb-3">
+        <h3 class="font-fredoka text-xl text-amber-300 flex items-center gap-2">
+          <i class="fa-solid fa-box-archive text-amber-400"></i>
+          <span>George's Completed Session Archive</span>
+        </h3>
+        <button id="close-history-modal-btn" class="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 text-cyan-200 flex items-center justify-center transition"><i class="fa-solid fa-xmark text-lg"></i></button>
+      </div>
+
+      <div id="history-feed" class="flex-1 overflow-y-auto pr-1 space-y-2.5"></div>
+
+      <div class="mt-4 pt-3 border-t border-white/10 text-right">
+        <button id="close-history-btn" class="px-5 py-2 rounded-xl bg-slate-800 text-cyan-200 font-fredoka font-bold text-xs transition">Close</button>
+      </div>
     </div>
+  </div>
 
-    <!-- MAIN JAVASCRIPT LOGIC -->
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        import { getAuth, signInAnonymously, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, doc, setDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+  <div id="reset-confirm-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md opacity-0 pointer-events-none transition-opacity duration-300">
+    <div id="reset-confirm-card" class="glass-panel border-2 border-amber-400 rounded-3xl max-w-md w-full p-6 text-center shadow-2xl transform scale-90 transition-transform duration-300">
+      <div class="w-14 h-14 mx-auto mb-3 rounded-full bg-amber-400/20 text-amber-300 flex items-center justify-center text-2xl border border-amber-400/40">
+        <i class="fa-solid fa-rotate-left"></i>
+      </div>
+      <h3 class="font-fredoka text-2xl text-amber-300 mb-2">Reset George's Token Board?</h3>
+      <p class="text-xs text-cyan-100 font-semibold mb-5">Would you like to save today's completed tokens to the session archive before starting a new goal?</p>
 
-        // Global Environment Variables
-        const appId = typeof __app_id !== 'undefined' ? __app_id : 'george-turtle-board-app';
-        const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : null;
-        const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
+      <div class="flex flex-col gap-2">
+        <button id="confirm-save-reset-btn" class="w-full py-3 rounded-xl bg-gradient-to-r from-emerald-400 to-teal-500 text-slate-950 font-fredoka font-bold text-sm hover:brightness-110 active:scale-95 transition">
+          <i class="fa-solid fa-box-archive mr-1.5"></i> Save Session to History & Reset Board
+        </button>
+        <button id="confirm-just-reset-btn" class="w-full py-2.5 rounded-xl bg-amber-500/80 hover:bg-amber-500 text-slate-950 font-fredoka font-bold text-xs transition">Just Reset Board</button>
+        <button id="cancel-reset-btn" class="w-full py-2 rounded-xl bg-slate-800 text-cyan-200 font-fredoka font-bold text-xs transition">Cancel</button>
+      </div>
+    </div>
+  </div>
 
-        const TARGET_EMAIL = "Kevin.tudor@brightmontacademy.com";
-        const STORAGE_KEY = "george_turtle_board_state_v3";
+  <div id="victory-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/85 backdrop-blur-md opacity-0 pointer-events-none transition-opacity duration-500">
+    <canvas id="confetti-canvas" class="absolute inset-0 pointer-events-none z-0"></canvas>
 
-        // Application State
-        let state = {
-            reward: "YouTube Video",
-            activeAwarder: "Teacher",
-            customAwarder: "",
-            tokens: [], // Array of token objects: { giver: "Teacher", timestamp: 123456789, id: "..." }
-            activityLog: [],
-            history: [],
-            soundEnabled: true
-        };
+    <div id="victory-card" class="glass-panel border-4 border-amber-300 rounded-3xl max-w-md w-full p-6 text-center shadow-2xl transform scale-90 transition-transform duration-500 relative z-10">
+      <div class="w-28 h-28 mx-auto mb-3 rounded-full bg-gradient-to-tr from-amber-400 to-teal-300 p-1 shadow-xl border-2 border-white animate-bounce-short relative flex items-center justify-center">
+        <svg class="w-10 h-10 absolute -top-4 text-amber-300 drop-shadow-md z-20" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M5 16L3 5l5.5 5L12 4l3.5 6L21 5l-2 11H5zm14 3c0 .6-.4 1-1 1H6c-.6 0-1-.4-1-1v-1h14v1z"/>
+        </svg>
+        <div class="w-full h-full rounded-full bg-slate-900 flex items-center justify-center text-5xl">🐢</div>
+      </div>
 
-        let db = null;
-        let auth = null;
-        let boardDocRef = null;
-        let isInitialLoad = true;
-        let previousTokenCount = 0;
+      <h2 class="font-fredoka text-3xl sm:text-4xl text-amber-300 mb-1 drop-shadow-md">GREAT JOB GEORGE! 🎉</h2>
+      <p class="text-base text-cyan-100 font-bold mb-4">You earned all 5 sea turtle tokens!</p>
 
-        /* Toast Popup Utility */
-        function showToast(msg) {
-            const toast = document.getElementById('toast');
-            const toastText = document.getElementById('toast-text');
-            toastText.textContent = msg;
-            toast.classList.remove('translate-y-20', 'opacity-0', 'pointer-events-none');
-            setTimeout(() => {
-                toast.classList.add('translate-y-20', 'opacity-0', 'pointer-events-none');
-            }, 2500);
+      <div class="bg-gradient-to-r from-teal-500/30 to-cyan-500/30 border-2 border-amber-300/60 rounded-2xl p-4 mb-6 shadow-inner">
+        <span class="block text-xs uppercase tracking-wider text-cyan-200 font-bold mb-1">Your Earned Reward:</span>
+        <span id="victory-reward-text" class="font-fredoka text-2xl text-amber-300 block">YouTube Video</span>
+      </div>
+
+      <div class="flex flex-col gap-2.5">
+        <button id="victory-new-session-btn" class="w-full py-3.5 rounded-2xl bg-gradient-to-r from-emerald-400 via-teal-400 to-amber-300 text-slate-950 font-fredoka font-bold text-lg hover:brightness-110 active:scale-95 transition">Start Next Session! 🚀</button>
+        <button id="close-victory-btn" class="w-full py-2.5 rounded-2xl bg-slate-800 text-cyan-200 font-fredoka font-bold text-xs transition">Keep Viewing Tokens</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="toast" class="fixed bottom-6 right-6 z-50 transform translate-y-20 opacity-0 pointer-events-none transition-all duration-300 bg-emerald-400 text-slate-950 px-4 py-3 rounded-2xl border-2 border-emerald-200 shadow-lg flex items-center gap-2 font-bold">
+    <i class="fa-solid fa-circle-check text-lg"></i>
+    <span id="toast-text">Action completed successfully!</span>
+  </div>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+    import { getAuth, signInAnonymously, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+    import { getFirestore, doc, setDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+    const appId = typeof window !== 'undefined' && typeof window.__app_id !== 'undefined' ? window.__app_id : 'george-turtle-board-app';
+    const firebaseConfig = typeof window !== 'undefined' && typeof window.__firebase_config !== 'undefined' ? JSON.parse(window.__firebase_config) : null;
+    const initialAuthToken = typeof window !== 'undefined' && typeof window.__initial_auth_token !== 'undefined' ? window.__initial_auth_token : null;
+
+    const STORAGE_KEY = 'george_turtle_board_state_v3';
+    const MAX_TOKENS = 5;
+
+    const state = {
+      reward: 'YouTube Video',
+      activeAwarder: 'Teacher',
+      customAwarder: '',
+      tokens: [],
+      activityLog: [],
+      history: [],
+      soundEnabled: true,
+    };
+
+    let db = null;
+    let auth = null;
+    let boardDocRef = null;
+    let isInitialLoad = true;
+    let previousTokenCount = 0;
+    let audioCtx = null;
+
+    function showToast(message) {
+      const toast = document.getElementById('toast');
+      const toastText = document.getElementById('toast-text');
+      toastText.textContent = message;
+      toast.classList.remove('translate-y-20', 'opacity-0', 'pointer-events-none');
+      clearTimeout(showToast.timer);
+      showToast.timer = setTimeout(() => {
+        toast.classList.add('translate-y-20', 'opacity-0', 'pointer-events-none');
+      }, 2500);
+    }
+
+    function getAudioContext() {
+      if (!audioCtx) {
+        const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+        if (AudioContextClass) audioCtx = new AudioContextClass();
+      }
+      if (audioCtx && audioCtx.state === 'suspended') audioCtx.resume();
+      return audioCtx;
+    }
+
+    function playSound(type) {
+      if (!state.soundEnabled) return;
+      const ctx = getAudioContext();
+      if (!ctx) return;
+
+      try {
+        if (type === 'add') {
+          const osc = ctx.createOscillator();
+          const gain = ctx.createGain();
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(380, ctx.currentTime);
+          osc.frequency.exponentialRampToValueAtTime(850, ctx.currentTime + 0.15);
+          gain.gain.setValueAtTime(0.3, ctx.currentTime);
+          gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.15);
+          osc.connect(gain);
+          gain.connect(ctx.destination);
+          osc.start();
+          osc.stop(ctx.currentTime + 0.15);
+        } else if (type === 'remove') {
+          const osc = ctx.createOscillator();
+          const gain = ctx.createGain();
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(600, ctx.currentTime);
+          osc.frequency.exponentialRampToValueAtTime(220, ctx.currentTime + 0.16);
+          gain.gain.setValueAtTime(0.25, ctx.currentTime);
+          gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.16);
+          osc.connect(gain);
+          gain.connect(ctx.destination);
+          osc.start();
+          osc.stop(ctx.currentTime + 0.16);
+        } else if (type === 'victory') {
+          const notes = [523.25, 659.25, 783.99, 1046.5, 1318.51];
+          notes.forEach((freq, idx) => {
+            const osc = ctx.createOscillator();
+            const gain = ctx.createGain();
+            const startTime = ctx.currentTime + idx * 0.12;
+            osc.type = 'triangle';
+            osc.frequency.setValueAtTime(freq, startTime);
+            gain.gain.setValueAtTime(0, startTime);
+            gain.gain.linearRampToValueAtTime(0.3, startTime + 0.04);
+            gain.gain.exponentialRampToValueAtTime(0.001, startTime + 0.55);
+            osc.connect(gain);
+            gain.connect(ctx.destination);
+            osc.start(startTime);
+            osc.stop(startTime + 0.6);
+          });
+        }
+      } catch (err) {
+        console.warn('Audio warning:', err);
+      }
+    }
+
+    function loadFromLocalStorage() {
+      try {
+        const saved = localStorage.getItem(STORAGE_KEY);
+        if (!saved) return;
+        const parsed = JSON.parse(saved);
+        state.reward = parsed.reward || 'YouTube Video';
+        state.tokens = Array.isArray(parsed.tokens) ? parsed.tokens : [];
+        state.activityLog = Array.isArray(parsed.activityLog) ? parsed.activityLog : [];
+        state.history = Array.isArray(parsed.history) ? parsed.history : [];
+        if (parsed.activeAwarder) state.activeAwarder = parsed.activeAwarder;
+        if (parsed.customAwarder) state.customAwarder = parsed.customAwarder;
+        if (typeof parsed.soundEnabled === 'boolean') state.soundEnabled = parsed.soundEnabled;
+      } catch (err) {
+        console.warn('LocalStorage load error:', err);
+      }
+    }
+
+    function saveToLocalStorage() {
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify({
+          reward: state.reward,
+          tokens: state.tokens,
+          activityLog: state.activityLog,
+          history: state.history,
+          activeAwarder: state.activeAwarder,
+          customAwarder: state.customAwarder,
+          soundEnabled: state.soundEnabled,
+        }));
+      } catch (err) {
+        console.warn('LocalStorage save error:', err);
+      }
+    }
+
+    function getCurrentAwarderName() {
+      if (state.customAwarder && state.customAwarder.trim()) return state.customAwarder.trim();
+      return state.activeAwarder || 'Teacher';
+    }
+
+    function renderAwarderButtons() {
+      const teacherBtn = document.getElementById('awarder-teacher-btn');
+      const therapistBtn = document.getElementById('awarder-therapist-btn');
+
+      const teacherClass = state.activeAwarder === 'Teacher' && !state.customAwarder.trim()
+        ? 'awarder-toggle-btn flex-1 py-2 px-3 rounded-xl bg-emerald-400 text-slate-950 font-fredoka font-bold text-sm shadow transition border-2 border-emerald-300 flex items-center justify-center gap-1'
+        : 'awarder-toggle-btn flex-1 py-2 px-3 rounded-xl bg-white/10 hover:bg-white/20 text-cyan-100 font-fredoka font-bold text-sm shadow transition border border-white/20 flex items-center justify-center gap-1';
+
+      const therapistClass = state.activeAwarder === 'Therapist' && !state.customAwarder.trim()
+        ? 'awarder-toggle-btn flex-1 py-2 px-3 rounded-xl bg-emerald-400 text-slate-950 font-fredoka font-bold text-sm shadow transition border-2 border-emerald-300 flex items-center justify-center gap-1'
+        : 'awarder-toggle-btn flex-1 py-2 px-3 rounded-xl bg-white/10 hover:bg-white/20 text-cyan-100 font-fredoka font-bold text-sm shadow transition border border-white/20 flex items-center justify-center gap-1';
+
+      teacherBtn.className = teacherClass;
+      therapistBtn.className = therapistClass;
+    }
+
+    function renderSlots() {
+      const grid = document.getElementById('slots-grid');
+      if (!grid) return;
+
+      grid.innerHTML = '';
+
+      for (let i = 0; i < MAX_TOKENS; i++) {
+        const occupied = i < state.tokens.length;
+        const token = occupied ? state.tokens[i] : null;
+
+        const slot = document.createElement('div');
+        slot.dataset.slotIndex = String(i);
+        slot.className = `relative w-full aspect-square max-w-[140px] rounded-3xl flex flex-col items-center justify-center cursor-pointer transition-all duration-300 p-2 ${occupied ? 'bg-gradient-to-b from-teal-500/40 to-emerald-600/50 border-2 border-emerald-300 shadow-xl scale-100 hover:scale-105 animate-bounce-short' : 'bg-slate-900/60 border-2 border-dashed border-cyan-400/40 hover:border-cyan-300 hover:bg-slate-800/60 scale-95 hover:scale-100'}`;
+
+        if (occupied) {
+          slot.innerHTML = `
+            <div class="relative w-full h-full flex flex-col items-center justify-between p-1.5 animate-swim">
+              <svg class="w-16 h-16 sm:w-20 sm:h-20 drop-shadow-lg" viewBox="0 0 100 100" fill="none">
+                <path d="M 20 40 C 5 25, 0 45, 25 55" fill="#52b788" stroke="#1b4332" stroke-width="3"/>
+                <path d="M 80 40 C 95 25, 100 45, 75 55" fill="#52b788" stroke="#1b4332" stroke-width="3"/>
+                <path d="M 25 70 C 15 85, 30 90, 38 78" fill="#52b788" stroke="#1b4332" stroke-width="3"/>
+                <path d="M 75 70 C 85 85, 70 90, 62 78" fill="#52b788" stroke="#1b4332" stroke-width="3"/>
+                <circle cx="50" cy="22" r="14" fill="#74c69d" stroke="#1b4332" stroke-width="3"/>
+                <circle cx="45" cy="18" r="2.5" fill="#032b45"/>
+                <circle cx="55" cy="18" r="2.5" fill="#032b45"/>
+                <path d="M 46 25 Q 50 28 54 25" stroke="#032b45" stroke-width="2" stroke-linecap="round"/>
+                <ellipse cx="50" cy="56" rx="28" ry="30" fill="#2d6a4f" stroke="#1b4332" stroke-width="3.5"/>
+                <polygon points="50,38 62,48 58,64 42,64 38,48" fill="#52b788" stroke="#1b4332" stroke-width="1.5"/>
+              </svg>
+              <span class="text-[10px] sm:text-xs bg-slate-950/80 text-cyan-200 px-2 py-0.5 rounded-full font-bold border border-cyan-300/40 shadow truncate max-w-full">${token?.giver || 'Teacher'}</span>
+            </div>
+          `;
+          slot.addEventListener('click', () => removeToken(i));
+        } else {
+          slot.innerHTML = `
+            <div class="flex flex-col items-center justify-center text-center opacity-70 hover:opacity-100 transition">
+              <svg class="w-14 h-14 sm:w-16 sm:h-16 text-cyan-300/70" viewBox="0 0 100 100" fill="currentColor">
+                <path d="M 50 15 C 25 15, 10 35, 15 65 C 18 80, 32 88, 50 88 C 68 88, 82 80, 85 65 C 90 35, 75 15, 50 15 Z" fill="rgba(144, 224, 239, 0.2)" stroke="#90e0ef" stroke-width="2.5"/>
+                <path d="M 50 15 L 50 88 M 50 15 L 30 82 M 50 15 L 70 82 M 50 15 L 18 70 M 50 15 L 82 70" stroke="#90e0ef" stroke-width="1.5" stroke-dasharray="3,3"/>
+              </svg>
+              <span class="text-[11px] font-fredoka text-cyan-200 font-bold mt-1">Slot #${i + 1}</span>
+            </div>
+          `;
+          slot.addEventListener('click', addToken);
+          slot.addEventListener('dragover', (event) => {
+            event.preventDefault();
+            slot.classList.add('drag-over');
+          });
+          slot.addEventListener('dragleave', () => slot.classList.remove('drag-over'));
+          slot.addEventListener('drop', (event) => {
+            event.preventDefault();
+            slot.classList.remove('drag-over');
+            addToken();
+          });
         }
 
-        /* Web Audio API Synthesizer */
-        let audioCtx = null;
-        function getAudioContext() {
-            if (!audioCtx) {
-                const AudioContextClass = window.AudioContext || window.webkitAudioContext;
-                if (AudioContextClass) audioCtx = new AudioContextClass();
-            }
-            if (audioCtx && audioCtx.state === 'suspended') {
-                audioCtx.resume();
-            }
-            return audioCtx;
-        }
-
-        function playSound(type) {
-            if (!state.soundEnabled) return;
-            const ctx = getAudioContext();
-            if (!ctx) return;
-
-            try {
-                if (type === 'add') {
-                    // Cheerful Bubble Plop
-                    const osc = ctx.createOscillator();
-                    const gain = ctx.createGain();
-                    osc.type = 'sine';
-                    osc.frequency.setValueAtTime(380, ctx.currentTime);
-                    osc.frequency.exponentialRampToValueAtTime(850, ctx.currentTime + 0.15);
-                    gain.gain.setValueAtTime(0.3, ctx.currentTime);
-                    gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.15);
-                    osc.connect(gain);
-                    gain.connect(ctx.destination);
-                    osc.start();
-                    osc.stop(ctx.currentTime + 0.15);
-                } else if (type === 'remove') {
-                    // Ocean Splash
-                    const osc = ctx.createOscillator();
-                    const gain = ctx.createGain();
-                    osc.type = 'sine';
-                    osc.frequency.setValueAtTime(600, ctx.currentTime);
-                    osc.frequency.exponentialRampToValueAtTime(220, ctx.currentTime + 0.16);
-                    gain.gain.setValueAtTime(0.25, ctx.currentTime);
-                    gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.16);
-                    osc.connect(gain);
-                    gain.connect(ctx.destination);
-                    osc.start();
-                    osc.stop(ctx.currentTime + 0.16);
-                } else if (type === 'click') {
-                    const osc = ctx.createOscillator();
-                    const gain = ctx.createGain();
-                    osc.type = 'triangle';
-                    osc.frequency.setValueAtTime(440, ctx.currentTime);
-                    gain.gain.setValueAtTime(0.1, ctx.currentTime);
-                    gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.06);
-                    osc.connect(gain);
-                    gain.connect(ctx.destination);
-                    osc.start();
-                    osc.stop(ctx.currentTime + 0.06);
-                } else if (type === 'victory') {
-                    // Multi-note fanfare
-                    const notes = [523.25, 659.25, 783.99, 1046.50, 1318.51];
-                    notes.forEach((freq, idx) => {
-                        const osc = ctx.createOscillator();
-                        const gain = ctx.createGain();
-                        const startTime = ctx.currentTime + idx * 0.12;
-                        osc.type = 'triangle';
-                        osc.frequency.setValueAtTime(freq, startTime);
-                        gain.gain.setValueAtTime(0, startTime);
-                        gain.gain.linearRampToValueAtTime(0.3, startTime + 0.04);
-                        gain.gain.exponentialRampToValueAtTime(0.001, startTime + 0.55);
-                        osc.connect(gain);
-                        gain.connect(ctx.destination);
-                        osc.start(startTime);
-                        osc.stop(startTime + 0.6);
-                    });
-                }
-            } catch (e) {
-                console.warn("Audio Context Warning:", e);
-            }
-        }
-
-        /* Local Persistence */
-        function loadFromLocalStorage() {
-            try {
-                const saved = localStorage.getItem(STORAGE_KEY);
-                if (saved) {
-                    const parsed = JSON.parse(saved);
-                    state.reward = parsed.reward || "YouTube Video";
-                    state.tokens = parsed.tokens || [];
-                    state.activityLog = parsed.activityLog || [];
-                    state.history = parsed.history || [];
-                    if (parsed.activeAwarder) state.activeAwarder = parsed.activeAwarder;
-                    if (parsed.customAwarder) state.customAwarder = parsed.customAwarder;
-                }
-            } catch (e) {
-                console.warn("LocalStorage Load error:", e);
-            }
-        }
-
-        function saveToLocalStorage() {
-            try {
-                localStorage.setItem(STORAGE_KEY, JSON.stringify({
-                    reward: state.reward,
-                    tokens: state.tokens,
-                    activityLog: state.activityLog,
-                    history: state.history,
-                    activeAwarder: state.activeAwarder,
-                    customAwarder: state.customAwarder
-                }));
-            } catch (e) {
-                console.warn("LocalStorage Save error:", e);
-            }
-        }
-
-        /* Cloud Push Asynchronous Writer */
-        async function pushStateToCloud() {
-            saveToLocalStorage();
-            if (db && boardDocRef && auth?.currentUser) {
-                try {
-                    await setDoc(boardDocRef, {
-                        reward: state.reward,
-                        tokens: state.tokens,
-                        activityLog: state.activityLog,
-                        history: state.history,
-                        activeAwarder: state.activeAwarder,
-                        customAwarder: state.customAwarder,
-                        updatedAt: Date.now()
-                    });
-                } catch (e) {
-                    console.warn("Firestore sync write failed, state saved locally:", e);
-                }
-            }
-        }
-
-        /* Firebase Real-Time Synchronization Initializer */
-        async function initCloudSync() {
-            loadFromLocalStorage();
-            renderAll();
-
-            if (!firebaseConfig || !firebaseConfig.apiKey) {
-                document.getElementById('sync-text').textContent = "🟢 Synced (Local Session)";
-                return;
-            }
-
-            try {
-                const app = initializeApp(firebaseConfig);
-                auth = getAuth(app);
-                db = getFirestore(app);
-
-                // RULE 3: Auth Before Queries
-                if (initialAuthToken) {
-                    await signInWithCustomToken(auth, initialAuthToken);
-                } else {
-                    await signInAnonymously(auth);
-                }
-
-                if (!auth.currentUser) return;
-
-                // RULE 1: Strict public data path format
-                boardDocRef = doc(db, 'artifacts', appId, 'public', 'data', 'george_board', 'state');
-
-                // Real-time Firestore Listener with Error Callback
-                onSnapshot(boardDocRef, (docSnap) => {
-                    if (docSnap.exists()) {
-                        const data = docSnap.data();
-                        const newTokens = data.tokens ?? [];
-                        state.reward = data.reward ?? state.reward;
-                        state.activityLog = data.activityLog ?? state.activityLog;
-                        state.history = data.history ?? state.history;
-                        state.activeAwarder = data.activeAwarder ?? state.activeAwarder;
-                        state.customAwarder = data.customAwarder ?? state.customAwarder;
-
-                        // Trigger victory if 5th token added remotely
-                        if (!isInitialLoad && newTokens.length === 5 && previousTokenCount < 5) {
-                            triggerVictoryCelebration();
-                        }
-
-                        previousTokenCount = newTokens.length;
-                        state.tokens = newTokens;
-                        isInitialLoad = false;
-
-                        saveToLocalStorage();
-                        renderAll();
-                        document.getElementById('sync-text').textContent = "🟢 Cloud Synced Live Across Devices";
-                    } else {
-                        pushStateToCloud();
-                    }
-                }, (err) => {
-                    console.warn("Firestore snapshot listener error:", err);
-                    document.getElementById('sync-text').textContent = "🟡 Local Sync Active";
-                });
-
-            } catch (err) {
-                console.warn("Firebase Auth/Sync init failed:", err);
-                document.getElementById('sync-text').textContent = "🟡 Local Sync Active";
-            }
-        }
-
-        function getCurrentAwarderName() {
-            if (state.customAwarder && state.customAwarder.trim() !== "") {
-                return state.customAwarder.trim();
-            }
-            return state.activeAwarder || "Teacher";
-        }
-
-        /* Core Token Addition Logic */
-        function addToken() {
-            if (state.tokens.length >= 5) {
-                showToast("All 5 tokens are earned! Great job!");
-                triggerVictoryCelebration();
-                return;
-            }
-
-            const giverName = getCurrentAwarderName();
-            const newToken = {
-                id: 'tok_' + Date.now() + '_' + Math.random().toString(36).substr(2, 4),
-                giver: giverName,
-                timestamp: Date.now()
-            };
-
-            state.tokens.push(newToken);
-            
-            const logEntry = {
-                action: "TOKEN_ADDED",
-                giver: newToken.giver,
-                reward: state.reward,
-                tokenCount: state.tokens.length,
-                timestamp: Date.now()
-            };
-            state.activityLog.unshift(logEntry);
-
-            playSound('add');
-            showToast(`+1 Token awarded by ${newToken.giver}!`);
-
-            renderAll();
-
-            if (state.tokens.length === 5) {
-                setTimeout(triggerVictoryCelebration, 250);
-            }
-
-            pushStateToCloud();
-        }
-
-        /* Token Removal Logic */
-        function removeToken(index = -1) {
-            if (state.tokens.length === 0) {
-                showToast("No tokens to remove.");
-                return;
-            }
-
-            const targetIdx = index >= 0 ? index : state.tokens.length - 1;
-            const removed = state.tokens.splice(targetIdx, 1)[0];
-
-            const logEntry = {
-                action: "TOKEN_REMOVED",
-                giver: removed ? removed.giver : getCurrentAwarderName(),
-                reward: state.reward,
-                tokenCount: state.tokens.length,
-                timestamp: Date.now()
-            };
-            state.activityLog.unshift(logEntry);
-
-            playSound('remove');
-            showToast(`-1 Token removed.`);
-
-            renderAll();
-            pushStateToCloud();
-        }
-
-        /* DOM Renderers */
-        function renderAll() {
-            renderSlots();
-            renderProgressBar();
-            renderActivityLog();
-            renderAwarderToggleUI();
-            
-            const rewardInput = document.getElementById('reward-input');
-            if (rewardInput && document.activeElement !== rewardInput) {
-                rewardInput.value = state.reward;
-            }
-
-            const customAwarderInput = document.getElementById('custom-awarder-input');
-            if (customAwarderInput && document.activeElement !== customAwarderInput) {
-                customAwarderInput.value = state.customAwarder || "";
-            }
-        }
-
-        function renderSlots() {
-            const grid = document.getElementById('slots-grid');
-            if (!grid) return;
-
-            grid.innerHTML = '';
-
-            for (let i = 0; i < 5; i++) {
-                const isOccupied = i < state.tokens.length;
-                const tokenData = isOccupied ? state.tokens[i] : null;
-
-                const slotEl = document.createElement('div');
-                slotEl.className = `relative w-full aspect-square max-w-[140px] rounded-3xl flex flex-col items-center justify-center cursor-pointer transition-all duration-300 p-2 ${
-                    isOccupied 
-                        ? 'bg-gradient-to-b from-teal-500/40 to-emerald-600/50 border-2 border-emerald-300 shadow-xl scale-100 hover:scale-105 animate-bounce-short' 
-                        : 'bg-slate-900/60 border-2 border-dashed border-cyan-400/40 hover:border-cyan-300 hover:bg-slate-800/60 scale-95 hover:scale-100'
-                }`;
-
-                slotEl.dataset.slotIndex = i;
-
-                if (isOccupied) {
-                    slotEl.innerHTML = `
-                        <div class="relative w-full h-full flex flex-col items-center justify-between p-1.5 animate-swim">
-                            <!-- Turtle SVG -->
-                            <svg class="w-16 h-16 sm:w-20 sm:h-20 drop-shadow-lg" viewBox="0 0 100 100" fill="none">
-                                <path d="M 20 40 C 5 25, 0 45, 25 55" fill="#52b788" stroke="#1b4332" stroke-width="3"/>
-                                <path d="M 80 40 C 95 25, 100 45, 75 55" fill="#52b788" stroke="#1b4332" stroke-width="3"/>
-                                <path d="M 25 70 C 15 85, 30 90, 38 78" fill="#52b788" stroke="#1b4332" stroke-width="3"/>
-                                <path d="M 75 70 C 85 85, 70 90, 62 78" fill="#52b788" stroke="#1b4332" stroke-width="3"/>
-                                <circle cx="50" cy="22" r="14" fill="#74c69d" stroke="#1b4332" stroke-width="3"/>
-                                <circle cx="45" cy="18" r="2.5" fill="#032b45"/>
-                                <circle cx="55" cy="18" r="2.5" fill="#032b45"/>
-                                <path d="M 46 25 Q 50 28 54 25" stroke="#032b45" stroke-width="2" stroke-linecap="round"/>
-                                <ellipse cx="50" cy="56" rx="28" ry="30" fill="#2d6a4f" stroke="#1b4332" stroke-width="3.5"/>
-                                <polygon points="50,38 62,48 58,64 42,64 38,48" fill="#52b788" stroke="#1b4332" stroke-width="1.5"/>
-                            </svg>
-                            <!-- Awarder Tag Badge -->
-                            <span class="text-[10px] sm:text-xs bg-slate-950/80 text-cyan-200 px-2 py-0.5 rounded-full font-bold border border-cyan-300/40 shadow truncate max-w-full">
-                                ${tokenData.giver || 'Teacher'}
-                            </span>
-                        </div>
-                    `;
-                    slotEl.addEventListener('click', () => removeToken(i));
-
-                } else {
-                    slotEl.innerHTML = `
-                        <div class="flex flex-col items-center justify-center text-center opacity-70 hover:opacity-100 transition">
-                            <!-- Scallop Shell SVG -->
-                            <svg class="w-14 h-14 sm:w-16 sm:h-16 text-cyan-300/70" viewBox="0 0 100 100" fill="currentColor">
-                                <path d="M 50 15 C 25 15, 10 35, 15 65 C 18 80, 32 88, 50 88 C 68 88, 82 80, 85 65 C 90 35, 75 15, 50 15 Z" fill="rgba(144, 224, 239, 0.2)" stroke="#90e0ef" stroke-width="3"/>
-                                <path d="M 50 15 L 50 88 M 50 15 L 30 82 M 50 15 L 70 82 M 50 15 L 18 70 M 50 15 L 82 70" stroke="#90e0ef" stroke-width="1.5" stroke-dasharray="3,3"/>
-                            </svg>
-                            <span class="text-[11px] font-fredoka text-cyan-200 font-bold mt-1">
-                                Slot #${i + 1}
-                            </span>
-                        </div>
-                    `;
-                    slotEl.addEventListener('click', () => addToken());
-
-                    slotEl.addEventListener('dragover', (e) => {
-                        e.preventDefault();
-                        slotEl.classList.add('drag-over');
-                    });
-                    slotEl.addEventListener('dragleave', () => slotEl.classList.remove('drag-over'));
-                    slotEl.addEventListener('drop', (e) => {
-                        e.preventDefault();
-                        slotEl.classList.remove('drag-over');
-                        addToken();
-                    });
-                }
-
-                grid.appendChild(slotEl);
-            }
-        }
-
-        function renderProgressBar() {
-            const count = state.tokens.length;
-            const pct = (count / 5) * 100;
-            
-            document.getElementById('progress-text').textContent = `${count} of 5 Tokens Earned`;
-            document.getElementById('progress-percent').textContent = `${Math.round(pct)}%`;
-            document.getElementById('progress-bar-fill').style.width = `${pct}%`;
-        }
-
-        function renderActivityLog() {
-            const feed = document.getElementById('activity-log-feed');
-            const badge = document.getElementById('log-count-badge');
-            if (!feed) return;
-
-            badge.textContent = `${state.activityLog.length} actions logged`;
-
-            if (state.activityLog.length === 0) {
-                feed.innerHTML = `
-                    <div class="text-center py-4 text-cyan-200/50 text-sm font-semibold">
-                        No tokens awarded yet today. Click "+1 Add Token" or tap an empty shell slot!
-                    </div>
-                `;
-                return;
-            }
-
-            feed.innerHTML = state.activityLog.map(item => {
-                const isAdd = item.action === "TOKEN_ADDED";
-                const dateStr = new Date(item.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
-                return `
-                    <div class="flex items-center justify-between p-2 rounded-xl bg-slate-900/60 border border-cyan-400/20 text-xs">
-                        <div class="flex items-center gap-2">
-                            <span class="w-6 h-6 rounded-full ${isAdd ? 'bg-emerald-400/20 text-emerald-300' : 'bg-rose-400/20 text-rose-300'} flex items-center justify-center font-bold">
-                                ${isAdd ? '+' : '-'}
-                            </span>
-                            <span class="font-bold text-cyan-100">
-                                ${isAdd ? 'Token Awarded' : 'Token Removed'} by <strong class="text-amber-300">${item.giver || 'Teacher'}</strong>
-                            </span>
-                        </div>
-                        <span class="text-cyan-200/60 font-mono text-[11px]">${dateStr}</span>
-                    </div>
-                `;
-            }).join('');
-        }
-
-        function renderAwarderToggleUI() {
-            const teacherBtn = document.getElementById('awarder-teacher-btn');
-            const therapistBtn = document.getElementById('awarder-therapist-btn');
-
-            if (state.activeAwarder === "Teacher" && !state.customAwarder) {
-                teacherBtn.className = "awarder-toggle-btn flex-1 py-2 px-3 rounded-xl bg-emerald-400 text-slate-950 font-fredoka font-bold text-sm shadow transition border-2 border-emerald-300 flex items-center justify-center gap-1.5";
-                therapistBtn.className = "awarder-toggle-btn flex-1 py-2 px-3 rounded-xl bg-white/10 hover:bg-white/20 text-cyan-100 font-fredoka font-bold text-sm shadow transition border border-white/20 flex items-center justify-center gap-1.5";
-            } else if (state.activeAwarder === "Therapist" && !state.customAwarder) {
-                therapistBtn.className = "awarder-toggle-btn flex-1 py-2 px-3 rounded-xl bg-emerald-400 text-slate-950 font-fredoka font-bold text-sm shadow transition border-2 border-emerald-300 flex items-center justify-center gap-1.5";
-                teacherBtn.className = "awarder-toggle-btn flex-1 py-2 px-3 rounded-xl bg-white/10 hover:bg-white/20 text-cyan-100 font-fredoka font-bold text-sm shadow transition border border-white/20 flex items-center justify-center gap-1.5";
-            } else {
-                teacherBtn.className = "awarder-toggle-btn flex-1 py-2 px-3 rounded-xl bg-white/10 hover:bg-white/20 text-cyan-100 font-fredoka font-bold text-sm shadow transition border border-white/20 flex items-center justify-center gap-1.5";
-                therapistBtn.className = "awarder-toggle-btn flex-1 py-2 px-3 rounded-xl bg-white/10 hover:bg-white/20 text-cyan-100 font-fredoka font-bold text-sm shadow transition border border-white/20 flex items-center justify-center gap-1.5";
-            }
-        }
-
-        /* Touch & Drag and Drop Setup */
-        function setupDragAndDrop() {
-            const dragSource = document.getElementById('turtle-bank-drag-source');
-            if (!dragSource) return;
-
-            dragSource.addEventListener('dragstart', (e) => {
-                e.dataTransfer.setData('text/plain', 'turtle-token');
-                e.dataTransfer.effectAllowed = 'copy';
-            });
-
-            let touchClone = null;
-
-            dragSource.addEventListener('touchstart', (e) => {
-                const touch = e.touches[0];
-                touchClone = dragSource.cloneNode(true);
-                touchClone.classList.add('touch-clone');
-                touchClone.style.left = touch.clientX + 'px';
-                touchClone.style.top = touch.clientY + 'px';
-                document.body.appendChild(touchClone);
-            }, { passive: true });
-
-            dragSource.addEventListener('touchmove', (e) => {
-                if (!touchClone) return;
-                const touch = e.touches[0];
-                touchClone.style.left = touch.clientX + 'px';
-                touchClone.style.top = touch.clientY + 'px';
-            }, { passive: true });
-
-            dragSource.addEventListener('touchend', (e) => {
-                if (!touchClone) return;
-                const touch = e.changedTouches[0];
-                const dropTarget = document.elementFromPoint(touch.clientX, touch.clientY);
-                touchClone.remove();
-                touchClone = null;
-
-                if (dropTarget) {
-                    const slot = dropTarget.closest('[data-slot-index]');
-                    if (slot) {
-                        addToken();
-                    }
-                }
-            });
-        }
-
-        /* Victory Celebration Modal & Confetti Canvas */
-        function triggerVictoryCelebration() {
-            playSound('victory');
-
-            document.getElementById('victory-reward-text').textContent = state.reward || "YouTube Video";
-
-            const modal = document.getElementById('victory-modal');
-            const card = document.getElementById('victory-card');
-            modal.classList.remove('opacity-0', 'pointer-events-none');
-            card.classList.remove('scale-90');
-            card.classList.add('scale-100');
-
-            startConfetti();
-        }
-
-        function closeVictoryModal() {
-            const modal = document.getElementById('victory-modal');
-            const card = document.getElementById('victory-card');
-            card.classList.remove('scale-100');
-            card.classList.add('scale-90');
-            modal.classList.add('opacity-0', 'pointer-events-none');
-            stopConfetti();
-        }
-
-        let confettiAnimationId = null;
-        function startConfetti() {
-            const canvas = document.getElementById('confetti-canvas');
-            if (!canvas) return;
-            const ctx = canvas.getContext('2d');
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-
-            const particles = [];
-            const colors = ['#52b788', '#00b4d8', '#f4a261', '#ff70a6', '#90e0ef', '#ffd166'];
-
-            for (let i = 0; i < 120; i++) {
-                particles.push({
-                    x: Math.random() * canvas.width,
-                    y: Math.random() * canvas.height - canvas.height,
-                    r: Math.random() * 6 + 4,
-                    d: Math.random() * 10 + 2,
-                    color: colors[Math.floor(Math.random() * colors.length)],
-                    tilt: Math.random() * 10 - 10,
-                    tiltAngleIncremental: Math.random() * 0.07 + 0.05,
-                    tiltAngle: 0
-                });
-            }
-
-            function draw() {
-                ctx.clearRect(0, 0, canvas.width, canvas.height);
-                particles.forEach((p) => {
-                    ctx.beginPath();
-                    ctx.lineWidth = p.r;
-                    ctx.strokeStyle = p.color;
-                    ctx.moveTo(p.x + p.tilt + p.r / 2, p.y);
-                    ctx.lineTo(p.x + p.tilt, p.y + p.tilt + p.r / 2);
-                    ctx.stroke();
-
-                    p.tiltAngle += p.tiltAngleIncremental;
-                    p.y += (Math.cos(p.d) + 3 + p.r / 2) / 2;
-                    p.tilt = Math.sin(p.tiltAngle) * 15;
-
-                    if (p.y > canvas.height) {
-                        p.x = Math.random() * canvas.width;
-                        p.y = -10;
-                    }
-                });
-                confettiAnimationId = requestAnimationFrame(draw);
-            }
-            draw();
-        }
-
-        function stopConfetti() {
-            if (confettiAnimationId) {
-                cancelAnimationFrame(confettiAnimationId);
-                confettiAnimationId = null;
-            }
-            const canvas = document.getElementById('confetti-canvas');
-            if (canvas) {
-                const ctx = canvas.getContext('2d');
-                ctx.clearRect(0, 0, canvas.width, canvas.height);
-            }
-        }
-
-        /* Board Reset & History Controls */
-        function openResetModal() {
-            const modal = document.getElementById('reset-confirm-modal');
-            const card = document.getElementById('reset-confirm-card');
-            modal.classList.remove('opacity-0', 'pointer-events-none');
-            card.classList.remove('scale-90');
-            card.classList.add('scale-100');
-        }
-
-        function closeResetModal() {
-            const modal = document.getElementById('reset-confirm-modal');
-            const card = document.getElementById('reset-confirm-card');
-            card.classList.remove('scale-100');
-            card.classList.add('scale-90');
-            modal.classList.add('opacity-0', 'pointer-events-none');
-        }
-
-        function handleBoardReset(saveToHistory = true) {
-            if (saveToHistory && state.tokens.length > 0) {
-                state.history.unshift({
-                    id: 'session_' + Date.now(),
-                    reward: state.reward,
-                    tokenCount: state.tokens.length,
-                    completedAt: Date.now(),
-                    tokens: [...state.tokens]
-                });
-            }
-
-            state.tokens = [];
-            state.activityLog.unshift({
-                action: "BOARD_RESET",
-                giver: getCurrentAwarderName(),
-                reward: state.reward,
-                timestamp: Date.now()
-            });
-
-            closeResetModal();
-            playSound('remove');
-            showToast("Token board reset for a new goal session!");
-
-            renderAll();
-            pushStateToCloud();
-        }
-
-        function renderHistoryFeed() {
-            const feed = document.getElementById('history-feed');
-            if (!feed) return;
-
-            if (state.history.length === 0) {
-                feed.innerHTML = `
-                    <div class="text-center py-6 text-cyan-200/50 text-sm font-semibold">
-                        No saved sessions in the history archive yet.
-                    </div>
-                `;
-                return;
-            }
-
-            feed.innerHTML = state.history.map((item, idx) => {
-                const dateStr = new Date(item.completedAt).toLocaleString();
-                return `
-                    <div class="p-3 rounded-2xl bg-slate-900/80 border border-cyan-400/30 text-xs">
-                        <div class="flex items-center justify-between mb-1">
-                            <span class="font-fredoka text-amber-300 text-sm">Session #${state.history.length - idx}: ${item.reward}</span>
-                            <span class="bg-emerald-400/20 text-emerald-300 px-2 py-0.5 rounded-full font-bold">${item.tokenCount}/5 Tokens</span>
-                        </div>
-                        <span class="text-cyan-200/60 font-mono text-[11px] block">${dateStr}</span>
-                    </div>
-                `;
-            }).join('');
-        }
-
-        /* Export CSV & JSON Tools */
-        function exportCSV() {
-            if (state.activityLog.length === 0) {
-                showToast("No activity log data to export.");
-                return;
-            }
-
-            let csvContent = "data:text/csv;charset=utf-8,Timestamp,Action,Awarder,Reward Goal,Token Count\n";
-            state.activityLog.forEach(row => {
-                const timeStr = `"${new Date(row.timestamp).toLocaleString()}"`;
-                const actionStr = `"${row.action}"`;
-                const giverStr = `"${row.giver || 'Teacher'}"`;
-                const rewardStr = `"${row.reward || 'YouTube Video'}"`;
-                const countStr = row.tokenCount !== undefined ? row.tokenCount : "";
-                csvContent += `${timeStr},${actionStr},${giverStr},${rewardStr},${countStr}\n`;
-            });
-
-            const encodedUri = encodeURI(csvContent);
-            const link = document.createElement("a");
-            link.setAttribute("href", encodedUri);
-            link.setAttribute("download", `George_Token_Board_Report_${new Date().toISOString().split('T')[0]}.csv`);
-            document.body.appendChild(link);
-            link.click();
-            link.remove();
-            showToast("Activity CSV report downloaded!");
-        }
-
-        function downloadJSONSnapshot() {
-            const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify({
-                targetWorkspace: TARGET_EMAIL,
-                targetFolder: "George Token Board - Brightmont",
-                boardState: state,
-                exportedAt: new Date().toISOString()
-            }, null, 2));
-            const downloadAnchor = document.createElement('a');
-            downloadAnchor.setAttribute("href", dataStr);
-            downloadAnchor.setAttribute("download", `George_Token_Board_Snapshot_${Date.now()}.json`);
-            document.body.appendChild(downloadAnchor);
-            downloadAnchor.click();
-            downloadAnchor.remove();
-            showToast("JSON snapshot downloaded!");
-        }
-
-        /* Shareable Link Helper */
-        function copyShareableLink() {
-            const shareUrl = window.location.href;
-            try {
-                if (navigator.clipboard && navigator.clipboard.writeText) {
-                    navigator.clipboard.writeText(shareUrl).then(() => {
-                        showToast("Board link copied to clipboard!");
-                    }).catch(() => fallbackCopyText(shareUrl));
-                } else {
-                    fallbackCopyText(shareUrl);
-                }
-            } catch (err) {
-                fallbackCopyText(shareUrl);
-            }
-        }
-
-        function fallbackCopyText(text) {
-            const textArea = document.createElement("textarea");
-            textArea.value = text;
-            textArea.style.position = "fixed";
-            textArea.style.left = "-9999px";
-            document.body.appendChild(textArea);
-            textArea.focus();
-            textArea.select();
-            try {
-                document.execCommand('copy');
-                showToast("Board link copied to clipboard!");
-            } catch (err) {
-                showToast("Link: " + text);
-            }
-            document.body.removeChild(textArea);
-        }
-
-        /* Ambient Bubbles Creation */
-        function initAmbientBubbles() {
-            const container = document.getElementById('bubbles-container');
-            if (!container) return;
-
-            for (let i = 0; i < 18; i++) {
-                const bubble = document.createElement('div');
-                const size = Math.random() * 24 + 8;
-                bubble.className = "absolute rounded-full bg-cyan-200/20 border border-cyan-300/40 pointer-events-none animate-bubble";
-                bubble.style.width = size + 'px';
-                bubble.style.height = size + 'px';
-                bubble.style.left = Math.random() * 100 + '%';
-                bubble.style.animationDuration = (Math.random() * 4 + 5) + 's';
-                bubble.style.animationDelay = (Math.random() * 5) + 's';
-                container.appendChild(bubble);
-            }
-        }
-
-        /* Initialization & Event Wiring */
-        document.addEventListener('DOMContentLoaded', () => {
-            initAmbientBubbles();
-            setupDragAndDrop();
-            initCloudSync();
-
-            // Reward Goal Input
-            const rewardInput = document.getElementById('reward-input');
-            rewardInput.addEventListener('input', (e) => {
-                state.reward = e.target.value;
-                pushStateToCloud();
-            });
-
-            // Reward Presets
-            document.querySelectorAll('.reward-preset-btn').forEach(btn => {
-                btn.addEventListener('click', () => {
-                    state.reward = btn.dataset.reward;
-                    rewardInput.value = state.reward;
-                    playSound('click');
-                    pushStateToCloud();
-                    showToast(`Reward set to: ${state.reward}`);
-                });
-            });
-
-            // Awarder Toggle Buttons & Custom Input
-            const customAwarderInput = document.getElementById('custom-awarder-input');
-            
-            document.getElementById('awarder-teacher-btn').addEventListener('click', () => {
-                state.activeAwarder = "Teacher";
-                state.customAwarder = "";
-                customAwarderInput.value = "";
-                playSound('click');
-                renderAwarderToggleUI();
-                pushStateToCloud();
-            });
-
-            document.getElementById('awarder-therapist-btn').addEventListener('click', () => {
-                state.activeAwarder = "Therapist";
-                state.customAwarder = "";
-                customAwarderInput.value = "";
-                playSound('click');
-                renderAwarderToggleUI();
-                pushStateToCloud();
-            });
-
-            customAwarderInput.addEventListener('input', (e) => {
-                state.customAwarder = e.target.value;
-                renderAwarderToggleUI();
-                pushStateToCloud();
-            });
-
-            // Increment / Decrement Buttons
-            document.getElementById('add-token-btn').addEventListener('click', addToken);
-            document.getElementById('remove-token-btn').addEventListener('click', () => removeToken());
-
-            // Header Action Buttons
-            document.getElementById('share-link-btn').addEventListener('click', copyShareableLink);
-
-            // Drive Modal Controls
-            const gdriveModal = document.getElementById('gdrive-modal');
-            const gdriveCard = document.getElementById('gdrive-card');
-
-            const openGDrive = () => {
-                gdriveModal.classList.remove('opacity-0', 'pointer-events-none');
-                gdriveCard.classList.remove('scale-90');
-                gdriveCard.classList.add('scale-100');
-            };
-            const closeGDrive = () => {
-                gdriveCard.classList.remove('scale-100');
-                gdriveCard.classList.add('scale-90');
-                gdriveModal.classList.add('opacity-0', 'pointer-events-none');
-            };
-
-            document.getElementById('gdrive-status-btn').addEventListener('click', openGDrive);
-            document.getElementById('gdrive-modal-btn').addEventListener('click', openGDrive);
-            document.getElementById('close-gdrive-modal-btn').addEventListener('click', closeGDrive);
-            document.getElementById('close-gdrive-card-btn').addEventListener('click', closeGDrive);
-
-            document.getElementById('export-csv-btn').addEventListener('click', exportCSV);
-            document.getElementById('download-json-btn').addEventListener('click', downloadJSONSnapshot);
-
-            // History Modal Controls
-            const historyModal = document.getElementById('history-modal');
-            const historyCard = document.getElementById('history-card');
-
-            const openHistory = () => {
-                renderHistoryFeed();
-                historyModal.classList.remove('opacity-0', 'pointer-events-none');
-                historyCard.classList.remove('scale-90');
-                historyCard.classList.add('scale-100');
-            };
-            const closeHistory = () => {
-                historyCard.classList.remove('scale-100');
-                historyCard.classList.add('scale-90');
-                historyModal.classList.add('opacity-0', 'pointer-events-none');
-            };
-
-            document.getElementById('history-modal-btn').addEventListener('click', openHistory);
-            document.getElementById('close-history-modal-btn').addEventListener('click', closeHistory);
-            document.getElementById('close-history-btn').addEventListener('click', closeHistory);
-
-            // Clear Log Button
-            document.getElementById('clear-log-btn').addEventListener('click', () => {
-                state.activityLog = [];
-                renderActivityLog();
-                pushStateToCloud();
-                showToast("Activity log cleared.");
-            });
-
-            // Reset Board Controls
-            document.getElementById('trigger-reset-btn').addEventListener('click', openResetModal);
-            document.getElementById('cancel-reset-btn').addEventListener('click', closeResetModal);
-            document.getElementById('confirm-save-reset-btn').addEventListener('click', () => handleBoardReset(true));
-            document.getElementById('confirm-just-reset-btn').addEventListener('click', () => handleBoardReset(false));
-
-            // Victory Controls
-            document.getElementById('victory-new-session-btn').addEventListener('click', () => {
-                closeVictoryModal();
-                handleBoardReset(true);
-            });
-            document.getElementById('close-victory-btn').addEventListener('click', closeVictoryModal);
-
-            // Sound Toggle Button
-            document.getElementById('sound-toggle-btn').addEventListener('click', () => {
-                state.soundEnabled = !state.soundEnabled;
-                const icon = document.getElementById('sound-icon');
-                const text = document.getElementById('sound-text');
-                if (state.soundEnabled) {
-                    icon.className = "fa-solid fa-volume-high text-cyan-300";
-                    text.textContent = "Sound ON";
-                    playSound('click');
-                } else {
-                    icon.className = "fa-solid fa-volume-xmark text-rose-400";
-                    text.textContent = "Sound OFF";
-                }
-            });
+        grid.appendChild(slot);
+      }
+    }
+
+    function renderProgressBar() {
+      const count = state.tokens.length;
+      const pct = (count / MAX_TOKENS) * 100;
+      document.getElementById('progress-text').textContent = `${count} of ${MAX_TOKENS} Tokens Earned`;
+      document.getElementById('progress-percent').textContent = `${Math.round(pct)}%`;
+      document.getElementById('progress-bar-fill').style.width = `${pct}%`;
+    }
+
+    function renderActivityLog() {
+      const feed = document.getElementById('activity-log-feed');
+      const badge = document.getElementById('log-count-badge');
+      if (!feed) return;
+
+      badge.textContent = `${state.activityLog.length} actions logged`;
+
+      if (state.activityLog.length === 0) {
+        feed.innerHTML = '<div class="text-center py-4 text-cyan-200/50 text-sm font-semibold">No tokens awarded yet today. Click "+1 Add Token" or tap an empty shell slot!</div>';
+        return;
+      }
+
+      feed.innerHTML = state.activityLog.map((item) => {
+        const isAdd = item.action === 'TOKEN_ADDED';
+        const time = new Date(item.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+        return `
+          <div class="flex items-center justify-between p-2 rounded-xl bg-slate-900/60 border border-cyan-400/20 text-xs">
+            <div class="flex items-center gap-2">
+              <span class="w-6 h-6 rounded-full ${isAdd ? 'bg-emerald-400/20 text-emerald-300' : 'bg-rose-400/20 text-rose-300'} flex items-center justify-center font-bold">${isAdd ? '+' : '-'}</span>
+              <span class="font-bold text-cyan-100">${isAdd ? 'Token Awarded' : 'Token Removed'} by <strong class="text-amber-300">${item.giver || 'Teacher'}</strong></span>
+            </div>
+            <span class="text-cyan-200/60 font-mono text-[11px]">${time}</span>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function renderAll() {
+      renderSlots();
+      renderProgressBar();
+      renderActivityLog();
+      renderAwarderButtons();
+
+      const rewardInput = document.getElementById('reward-input');
+      if (rewardInput && document.activeElement !== rewardInput) {
+        rewardInput.value = state.reward;
+      }
+
+      const customInput = document.getElementById('custom-awarder-input');
+      if (customInput && document.activeElement !== customInput) {
+        customInput.value = state.customAwarder || '';
+      }
+
+      const soundText = document.getElementById('sound-text');
+      const soundIcon = document.getElementById('sound-icon');
+      if (soundText) soundText.textContent = state.soundEnabled ? 'Sound ON' : 'Sound OFF';
+      if (soundIcon) {
+        soundIcon.className = state.soundEnabled
+          ? 'fa-solid fa-volume-high text-cyan-300'
+          : 'fa-solid fa-volume-xmark text-cyan-300';
+      }
+
+      const rewardText = document.getElementById('victory-reward-text');
+      if (rewardText) rewardText.textContent = state.reward || 'YouTube Video';
+    }
+
+    function saveSessionToHistory() {
+      const session = {
+        date: new Date().toISOString(),
+        reward: state.reward,
+        tokens: [...state.tokens],
+        activityLog: [...state.activityLog],
+      };
+      state.history.unshift(session);
+      saveToLocalStorage();
+      renderHistory();
+    }
+
+    function renderHistory() {
+      const feed = document.getElementById('history-feed');
+      if (!feed) return;
+
+      if (!state.history.length) {
+        feed.innerHTML = '<div class="text-center py-8 text-cyan-200/60 text-sm">No completed sessions yet.</div>';
+        return;
+      }
+
+      feed.innerHTML = state.history.map((entry, index) => {
+        const date = new Date(entry.date).toLocaleString();
+        const tokenList = (entry.tokens || []).map(token => token.giver || 'Teacher').join(', ') || 'No tokens';
+        return `
+          <div class="rounded-2xl border border-cyan-400/20 bg-slate-900/60 p-3">
+            <div class="flex items-center justify-between gap-2 mb-2">
+              <h4 class="font-fredoka text-base text-amber-300">Session ${state.history.length - index}</h4>
+              <span class="text-[11px] text-cyan-200/60">${date}</span>
+            </div>
+            <p class="text-xs text-cyan-100"><strong>Reward:</strong> ${entry.reward || 'Untitled'}</p>
+            <p class="text-xs text-cyan-100 mt-1"><strong>Tokens:</strong> ${tokenList}</p>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function triggerVictoryCelebration() {
+      const modal = document.getElementById('victory-modal');
+      const card = document.getElementById('victory-card');
+      if (!modal || !card) return;
+
+      document.getElementById('victory-reward-text').textContent = state.reward || 'YouTube Video';
+      modal.classList.add('modal-visible');
+      card.classList.add('modal-card-visible');
+      playSound('victory');
+      launchConfetti();
+    }
+
+    function closeVictoryModal() {
+      const modal = document.getElementById('victory-modal');
+      const card = document.getElementById('victory-card');
+      if (!modal || !card) return;
+      modal.classList.remove('modal-visible');
+      card.classList.remove('modal-card-visible');
+    }
+
+    function launchConfetti() {
+      const canvas = document.getElementById('confetti-canvas');
+      const ctx = canvas.getContext('2d');
+      const colors = ['#f4a261', '#90e0ef', '#52b788', '#f87171', '#facc15', '#ffffff'];
+      const pieces = [];
+
+      const resize = () => {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+      };
+      resize();
+      window.addEventListener('resize', resize, { once: true });
+
+      for (let i = 0; i < 120; i++) {
+        pieces.push({
+          x: canvas.width / 2,
+          y: canvas.height / 2,
+          size: Math.random() * 8 + 4,
+          color: colors[Math.floor(Math.random() * colors.length)],
+          velocityX: (Math.random() - 0.5) * 12,
+          velocityY: (Math.random() - 0.5) * 10 - 4,
+          rotation: Math.random() * Math.PI,
+          spin: (Math.random() - 0.5) * 0.3,
         });
-    </script>
+      }
+
+      const draw = () => {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        pieces.forEach(piece => {
+          piece.x += piece.velocityX;
+          piece.y += piece.velocityY;
+          piece.velocityY += 0.08;
+          piece.rotation += piece.spin;
+          ctx.save();
+          ctx.translate(piece.x, piece.y);
+          ctx.rotate(piece.rotation);
+          ctx.fillStyle = piece.color;
+          ctx.fillRect(-piece.size / 2, -piece.size / 2, piece.size, piece.size * 1.5);
+          ctx.restore();
+        });
+
+        if (pieces.some(p => p.y < canvas.height + 20)) {
+          requestAnimationFrame(draw);
+        }
+      };
+      draw();
+    }
+
+    function setModalState(modalId, visible) {
+      const modal = document.getElementById(modalId);
+      const card = document.getElementById(modalId.replace('-modal', '-card'));
+      if (!modal) return;
+      if (visible) {
+        modal.classList.add('modal-visible');
+        if (card) card.classList.add('modal-card-visible');
+      } else {
+        modal.classList.remove('modal-visible');
+        if (card) card.classList.remove('modal-card-visible');
+      }
+    }
+
+    function addToken() {
+      if (state.tokens.length >= MAX_TOKENS) {
+        showToast('All 5 tokens are earned! Great job!');
+        triggerVictoryCelebration();
+        return;
+      }
+
+      const giver = getCurrentAwarderName();
+      const token = { id: `tok_${Date.now()}_${Math.random().toString(36).slice(2,6)}`, giver, timestamp: Date.now() };
+      state.tokens.push(token);
+      state.activityLog.unshift({ action: 'TOKEN_ADDED', giver, reward: state.reward, tokenCount: state.tokens.length, timestamp: Date.now() });
+
+      playSound('add');
+      showToast(`+1 Token awarded by ${giver}!`);
+      renderAll();
+
+      if (state.tokens.length === MAX_TOKENS) setTimeout(triggerVictoryCelebration, 250);
+      pushStateToCloud();
+    }
+
+    function removeToken(index = -1) {
+      if (state.tokens.length === 0) {
+        showToast('No tokens to remove.');
+        return;
+      }
+
+      const targetIndex = index >= 0 ? index : state.tokens.length - 1;
+      const removed = state.tokens.splice(targetIndex, 1)[0];
+      state.activityLog.unshift({ action: 'TOKEN_REMOVED', giver: removed ? removed.giver : getCurrentAwarderName(), reward: state.reward, tokenCount: state.tokens.length, timestamp: Date.now() });
+
+      playSound('remove');
+      showToast('-1 Token removed.');
+      renderAll();
+      pushStateToCloud();
+    }
+
+    function resetBoard(shouldSave = true) {
+      if (shouldSave && state.tokens.length > 0) {
+        saveSessionToHistory();
+      }
+
+      state.tokens = [];
+      state.activityLog = [];
+      renderAll();
+      pushStateToCloud();
+    }
+
+    async function pushStateToCloud() {
+      saveToLocalStorage();
+      if (db && boardDocRef && auth?.currentUser) {
+        try {
+          await setDoc(boardDocRef, {
+            reward: state.reward,
+            tokens: state.tokens,
+            activityLog: state.activityLog,
+            history: state.history,
+            activeAwarder: state.activeAwarder,
+            customAwarder: state.customAwarder,
+            updatedAt: Date.now(),
+          });
+        } catch (err) {
+          console.warn('Firestore sync failed:', err);
+        }
+      }
+    }
+
+    async function initCloudSync() {
+      loadFromLocalStorage();
+      renderAll();
+      renderHistory();
+
+      if (!firebaseConfig || !firebaseConfig.apiKey) {
+        document.getElementById('sync-text').textContent = '🟢 Synced (Local Session)';
+        return;
+      }
+
+      try {
+        const app = initializeApp(firebaseConfig);
+        auth = getAuth(app);
+        db = getFirestore(app);
+
+        if (initialAuthToken) {
+          await signInWithCustomToken(auth, initialAuthToken);
+        } else {
+          await signInAnonymously(auth);
+        }
+
+        if (!auth.currentUser) return;
+        boardDocRef = doc(db, 'artifacts', appId, 'public', 'data', 'george_board', 'state');
+
+        onSnapshot(boardDocRef, (docSnap) => {
+          if (docSnap.exists()) {
+            const data = docSnap.data();
+            const newTokens = data.tokens || [];
+            state.reward = data.reward ?? state.reward;
+            state.activityLog = data.activityLog ?? state.activityLog;
+            state.history = data.history ?? state.history;
+            state.activeAwarder = data.activeAwarder ?? state.activeAwarder;
+            state.customAwarder = data.customAwarder ?? state.customAwarder;
+
+            if (!isInitialLoad && newTokens.length === MAX_TOKENS && previousTokenCount < MAX_TOKENS) {
+              triggerVictoryCelebration();
+            }
+
+            previousTokenCount = newTokens.length;
+            state.tokens = newTokens;
+            isInitialLoad = false;
+            saveToLocalStorage();
+            renderAll();
+            renderHistory();
+            document.getElementById('sync-text').textContent = '🟢 Cloud Synced Live Across Devices';
+          } else {
+            pushStateToCloud();
+          }
+        }, (err) => {
+          console.warn('Firestore sync error:', err);
+          document.getElementById('sync-text').textContent = '🟡 Local Sync Active';
+        });
+      } catch (err) {
+        console.warn('Firebase sync init failed:', err);
+        document.getElementById('sync-text').textContent = '🟡 Local Sync Active';
+      }
+    }
+
+    function exportCsv() {
+      const rows = [['timestamp', 'action', 'giver', 'reward', 'tokenCount']];
+      state.activityLog.forEach(log => {
+        rows.push([new Date(log.timestamp).toISOString(), log.action, log.giver || '', log.reward || '', log.tokenCount || 0]);
+      });
+
+      const csv = rows.map(row => row.map(cell => `"${String(cell).replace(/"/g, '""')}"`).join(',')).join('\n');
+      const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'george-token-board-log.csv';
+      a.click();
+      URL.revokeObjectURL(url);
+    }
+
+    function exportJson() {
+      const blob = new Blob([JSON.stringify({
+        reward: state.reward,
+        tokens: state.tokens,
+        activityLog: state.activityLog,
+        history: state.history,
+        activeAwarder: state.activeAwarder,
+        customAwarder: state.customAwarder,
+        exportedAt: new Date().toISOString(),
+      }, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'george-token-board-state.json';
+      a.click();
+      URL.revokeObjectURL(url);
+    }
+
+    function setupBubbles() {
+      const container = document.getElementById('bubbles-container');
+      if (!container) return;
+
+      for (let i = 0; i < 18; i++) {
+        const bubble = document.createElement('span');
+        bubble.className = 'bubble';
+        const size = (Math.random() * 18 + 10) + 'px';
+        bubble.style.position = 'absolute';
+        bubble.style.width = size;
+        bubble.style.height = size;
+        bubble.style.left = (Math.random() * 100) + '%';
+        bubble.style.bottom = '-20px';
+        bubble.style.borderRadius = '9999px';
+        bubble.style.background = 'rgba(255,255,255,0.12)';
+        bubble.style.border = '1px solid rgba(144,224,239,0.5)';
+        bubble.style.animation = `bubble ${Math.random() * 8 + 10}s linear infinite`;
+        bubble.style.animationDelay = `${Math.random() * 8}s`;
+        bubble.style.opacity = '0.3';
+        container.appendChild(bubble);
+      }
+    }
+
+    function attachHandlers() {
+      document.getElementById('reward-input').addEventListener('input', (event) => {
+        state.reward = event.target.value || 'YouTube Video';
+        saveToLocalStorage();
+        renderAll();
+      });
+
+      document.getElementById('custom-awarder-input').addEventListener('input', (event) => {
+        state.customAwarder = event.target.value;
+        if (state.customAwarder.trim()) {
+          state.activeAwarder = 'Teacher';
+        }
+        saveToLocalStorage();
+        renderAll();
+      });
+
+      document.getElementById('awarder-teacher-btn').addEventListener('click', () => {
+        state.activeAwarder = 'Teacher';
+        state.customAwarder = '';
+        saveToLocalStorage();
+        renderAll();
+      });
+
+      document.getElementById('awarder-therapist-btn').addEventListener('click', () => {
+        state.activeAwarder = 'Therapist';
+        state.customAwarder = '';
+        saveToLocalStorage();
+        renderAll();
+      });
+
+      document.getElementById('add-token-btn').addEventListener('click', addToken);
+      document.getElementById('remove-token-btn').addEventListener('click', () => removeToken());
+      document.getElementById('trigger-reset-btn').addEventListener('click', () => setModalState('reset-confirm-modal', true));
+      document.getElementById('confirm-save-reset-btn').addEventListener('click', () => {
+        resetBoard(true);
+        setModalState('reset-confirm-modal', false);
+      });
+      document.getElementById('confirm-just-reset-btn').addEventListener('click', () => {
+        resetBoard(false);
+        setModalState('reset-confirm-modal', false);
+      });
+      document.getElementById('cancel-reset-btn').addEventListener('click', () => setModalState('reset-confirm-modal', false));
+      document.getElementById('close-history-btn').addEventListener('click', () => setModalState('history-modal', false));
+      document.getElementById('close-history-modal-btn').addEventListener('click', () => setModalState('history-modal', false));
+      document.getElementById('history-modal-btn').addEventListener('click', () => setModalState('history-modal', true));
+      document.getElementById('close-gdrive-modal-btn').addEventListener('click', () => setModalState('gdrive-modal', false));
+      document.getElementById('close-gdrive-card-btn').addEventListener('click', () => setModalState('gdrive-modal', false));
+      document.getElementById('gdrive-modal-btn').addEventListener('click', () => setModalState('gdrive-modal', true));
+      document.getElementById('close-victory-btn').addEventListener('click', closeVictoryModal);
+      document.getElementById('victory-new-session-btn').addEventListener('click', () => {
+        closeVictoryModal();
+        resetBoard(false);
+      });
+      document.getElementById('clear-log-btn').addEventListener('click', () => {
+        state.activityLog = [];
+        renderAll();
+        saveToLocalStorage();
+        pushStateToCloud();
+      });
+
+      document.getElementById('sound-toggle-btn').addEventListener('click', () => {
+        state.soundEnabled = !state.soundEnabled;
+        saveToLocalStorage();
+        renderAll();
+      });
+
+      document.getElementById('share-link-btn').addEventListener('click', async () => {
+        const url = window.location.href;
+        try {
+          await navigator.clipboard.writeText(url);
+          showToast('Board link copied!');
+        } catch (err) {
+          showToast('Copy failed, but the page URL is available in your address bar.');
+        }
+      });
+
+      document.getElementById('export-csv-btn').addEventListener('click', exportCsv);
+      document.getElementById('download-json-btn').addEventListener('click', exportJson);
+
+      document.querySelectorAll('.reward-preset-btn').forEach((button) => {
+        button.addEventListener('click', () => {
+          const reward = button.dataset.reward || 'YouTube Video';
+          state.reward = reward;
+          const input = document.getElementById('reward-input');
+          if (input) input.value = reward;
+          saveToLocalStorage();
+          renderAll();
+        });
+      });
+
+      const dragSource = document.getElementById('turtle-bank-drag-source');
+      if (dragSource) {
+        dragSource.addEventListener('dragstart', (event) => {
+          event.dataTransfer.setData('text/plain', 'turtle-token');
+          event.dataTransfer.effectAllowed = 'copy';
+        });
+
+        let touchClone = null;
+        dragSource.addEventListener('touchstart', (event) => {
+          const touch = event.touches[0];
+          const clone = dragSource.cloneNode(true);
+          clone.classList.add('touch-clone');
+          clone.style.left = `${touch.clientX}px`;
+          clone.style.top = `${touch.clientY}px`;
+          document.body.appendChild(clone);
+          touchClone = clone;
+        }, { passive: true });
+
+        dragSource.addEventListener('touchmove', (event) => {
+          if (!touchClone) return;
+          const touch = event.touches[0];
+          touchClone.style.left = `${touch.clientX}px`;
+          touchClone.style.top = `${touch.clientY}px`;
+        }, { passive: true });
+
+        dragSource.addEventListener('touchend', (event) => {
+          if (!touchClone) return;
+          const touch = event.changedTouches[0];
+          const target = document.elementFromPoint(touch.clientX, touch.clientY);
+          touchClone.remove();
+          touchClone = null;
+
+          const slot = target && target.closest('[data-slot-index]');
+          if (slot) {
+            addToken();
+          }
+        }, { passive: true });
+      }
+    }
+
+    function init() {
+      setupBubbles();
+      loadFromLocalStorage();
+      renderAll();
+      renderHistory();
+      attachHandlers();
+      initCloudSync();
+    }
+
+    init();
+  </script>
 </body>
 </html>
